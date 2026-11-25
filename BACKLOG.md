@@ -7,11 +7,14 @@
 - After migration, validate new useful app ideas and improve shared UI.
 
 - Check latest Pages deploy and retry transient artifact errors only; one earlier run succeeded.
-- Blind: test physical camera, offline caching, palette migration and native APK behavior.
+- Blind: browser offline caching and palette migration verified; test physical camera and native APK behavior.
 - Word-to-PDF and DeviceBridge: original free Render service links in portal; review security, licences and real deployment parity before any cutover.
 - Daily Discovery: run tests, fix upstream failures, require auth/persistence review and explicit free hosting feasibility before public exposure; exclude runtime DBs.
 
 - Daily Discovery PR #7 merged after green CI; prioritize safe local-only defaults and production auth isolation before any hosting.
 - Blind PR #2 merged after green web and APK CI; verify post-merge deployment and native artifact.
 
-- Blind PR #9: verify worker registration in secure contexts and full offline browser smoke after repair; physical hardware still pending.
+- Blind PR #9 merged after full browser and APK checks; physical hardware still pending.
+
+- Daily Discovery PR #10 merged after auth isolation/rotation tests; production rate limits, TLS, storage and access-token revocation pending.
+- Word-to-PDF: verify body admission, single-job limits, cleanup and non-root container; review parser/dependency security and free-tier memory before backend cutover.

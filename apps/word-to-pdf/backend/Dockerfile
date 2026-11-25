@@ -21,6 +21,11 @@ RUN pip install -r requirements.txt
 COPY backend/app ./app
 COPY frontend /frontend
 
+RUN useradd --system --uid 10001 --create-home converter \
+    && mkdir -p /app/uploads /app/outputs \
+    && chown -R converter:converter /app/uploads /app/outputs
+USER converter
+
 EXPOSE 8000
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
