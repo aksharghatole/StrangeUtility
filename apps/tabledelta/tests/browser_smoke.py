@@ -50,6 +50,27 @@ def main():
             page.locator("#inspect").click()
             page.locator("#compare").click()
             expect(page.locator("#metrics .metric b")).to_have_text(["0","0","1","0","0"])
+            # Delayed file read must not allow comparison against stale input.
+            page.evaluate("""() => {
+                const original = File.prototype.arrayBuffer;
+                File.prototype.arrayBuffer = function() {
+                    if (this.name !== 'slow.csv') return original.call(this);
+                    return new Promise(resolve => {
+                        window.finishRead = () => original.call(this).then(resolve);
+                    });
+                };
+            }""")
+            page.locator("#before-file").set_input_files({"name":"slow.csv","mimeType":"text/csv","buffer":b'id,name\n01,C'})
+            expect(page.locator("#inspect")).to_be_disabled()
+            expect(page.locator("#results")).to_be_hidden()
+            page.locator("#before-text").fill("id,name\n01,Manual")
+            expect(page.locator("#inspect")).to_be_enabled()
+            page.evaluate("window.finishRead()")
+            expect(page.locator("#before-text")).to_have_value("id,name\n01,Manual")
+            page.locator("#before-delimiter").select_option("tab")
+            page.locator("#before-file").set_input_files({"name":"new.csv","mimeType":"text/csv","buffer":b'id,name\n01,D'})
+            expect(page.locator("#before-delimiter")).to_have_value(",")
+            expect(page.locator("#inspect")).to_be_enabled()
             # Keyboard progression and focus after dynamic content changes.
             page.locator("#sample").focus()
             page.keyboard.press("Enter")
