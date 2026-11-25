@@ -1,0 +1,44 @@
+name: DeviceBridge integration
+on:
+  pull_request:
+    paths:
+      - 'apps/devicebridge/**'
+      - '.github/workflows/devicebridge.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/devicebridge/**'
+      - '.github/workflows/devicebridge.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: apps/devicebridge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check server.cjs && node --check public/app.js && node --check public/zip.js && node --check public/sw.js
+      - run: npm test
+  browser-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/devicebridge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python browser-smoke.py
