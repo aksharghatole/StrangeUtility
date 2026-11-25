@@ -22,3 +22,6 @@
 - Word-to-PDF PR #11 merged after non-root container smoke; review parser security, service resource limits and cutover plan.
 - DeviceBridge signaling safeguards: verify new cross-origin, request-limit, token comparison and browser pairing tests; query-token transport migration and physical devices remain pending.
 - Portal: APK workflow artifact link added (expires under Actions retention; not permanent release); verify accessibility and deploy.
+
+- DeviceBridge PR #12 merged after successful integration tests; verify main deploy, revisit SSE token transport and physical devices.
+- Paperwork: verify pinned archive download, actual same-origin PDF rendering and offline export, dependency licensing and cache behavior. No offline claim before CI passes.

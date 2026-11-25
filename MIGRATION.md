@@ -21,3 +21,5 @@ All five source imports merged. Paperwork PR #8 merged after green real-engine C
 Blind PR #9 merged after browser 45617759146, APK 45617759159 and portal 45617759253 passed. Daily Discovery PR #10 merged after security regression CI 45617684928 and portal 45617685026 passed. Word-to-PDF resource admission and container hardening proposed; CI pending. Existing hosted service unchanged.
 
 Word-to-PDF PR #11 merged at 8afb1fd after conversion and non-root Docker smoke CI 45618215910 and portal CI 45618215775. Existing Render service not switched. DeviceBridge admission safeguards proposed, portal links and accessibility improved; CI pending. Blind main APK 45617997034, browser 45617997192 and Daily Discovery main 45618024083 passed.
+
+DeviceBridge PR #12 merged after CI 45618691896 and 45618691825. Paperwork same-origin engine packaging and offline tests proposed; download and offline CI pending. Browser cache may be evicted; documents remain memory-only. Existing hosted services unchanged.
