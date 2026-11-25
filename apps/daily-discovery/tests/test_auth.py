@@ -134,3 +134,45 @@ def test_authenticated_users_do_not_share_favorites_or_history():
     assert b_history.status_code == 200
     assert a_history.json()["total"] >= 1
     assert b_history.json()["total"] == 0
+
+
+def test_local_profile_never_falls_back_to_registered_account():
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import Session
+    from database.db import Base
+    from database.repository import Repository
+
+    engine = create_engine("sqlite:///:memory:")
+    Base.metadata.create_all(engine)
+    with Session(engine) as db:
+        repository = Repository(db)
+        registered = repository.create_user(email="private@example.com", display_name="Private")
+        local = repository.get_or_create_local_user()
+        assert local.id != registered.id
+        assert local.email == "local@daily-discovery.local"
+        assert repository.get_or_create_local_user().id == local.id
+    engine.dispose()
+
+
+def test_authenticated_mode_blocks_anonymous_user_state(monkeypatch):
+    monkeypatch.setenv("AUTH_MODE", "authenticated")
+    monkeypatch.setenv("JWT_SECRET_KEY", "test-only-" + "a" * 48)
+    for endpoint in ("/api/favorites", "/api/history", "/api/settings", "/api/statistics", "/api/quiz/today", "/api/discoveries/today"):
+        assert client.get(endpoint).status_code == 401, endpoint
+    registered = _register("strict.auth@example.com")
+    assert registered.status_code == 201, registered.text
+    headers = {"Authorization": "Bearer " + registered.json()["access_token"]}
+    assert client.get("/api/favorites", headers=headers).status_code == 200
+
+
+def test_refresh_rotation_rejects_replayed_token():
+    response = _register("rotation.auth@example.com")
+    assert response.status_code == 201
+    old = response.json()["refresh_token"]
+    rotated = client.post("/api/auth/refresh", json={"refresh_token": old})
+    assert rotated.status_code == 200, rotated.text
+    new = rotated.json()["refresh_token"]
+    assert old != new
+    replay = client.post("/api/auth/refresh", json={"refresh_token": old})
+    assert replay.status_code == 401
+    assert client.post("/api/auth/refresh", json={"refresh_token": new}).status_code == 200
