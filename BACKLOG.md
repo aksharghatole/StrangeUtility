@@ -6,6 +6,10 @@
 - Preserve original deployments and data export/import; record rollback and parity.
 - After migration, validate new useful app ideas and improve shared UI.
 
-- Verify PR #2 Android SDK repair and attempt-specific Pages artifact deployment; do not merge until checks pass.
+- Check latest Pages deploy and retry transient artifact errors only; one earlier run succeeded.
+- Blind PR #2: keep Android check required; revisit Maven 429, reconcile central registry and documentation on merge.
+- Word-to-PDF and DeviceBridge: original free Render service links in portal; review security, licences and real deployment parity before any cutover.
+- Daily Discovery: run tests, fix upstream failures, require auth/persistence review and explicit free hosting feasibility before public exposure; exclude runtime DBs.
 
-- Confirm pinned Ubuntu 24.04 and explicit Android SDK packages build Blind; do not merge while APK checks fail.
+- Daily Discovery PR #7 merged after green CI; prioritize safe local-only defaults and production auth isolation before any hosting.
+- Blind PR #2 reconciled with current main without discarding any of the other migrations; check new web and APK CI before merge. No dependency mirror bypass.

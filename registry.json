@@ -17,30 +17,39 @@
     "status": "imported",
     "source": "https://github.com/aksharghatole/Blind",
     "path": "apps/blind/",
-    "sourceCommit": "4485646b40ef039e7c2068ca2d3f5c674b85ae1f"
+    "sourceCommit": "4485646b40ef039e7c2068ca2d3f5c674b85ae1f",
+    "notes": "Web and native source imported; Android APK and physical-device verification pending."
   },
   {
     "id": "word-to-pdf",
     "name": "Word to PDF",
     "category": "Documents",
     "description": "Server-side document conversion with LibreOffice.",
-    "status": "queued",
-    "source": "https://github.com/aksharghatole/word-to-pdf"
+    "status": "testing",
+    "source": "https://github.com/aksharghatole/word-to-pdf",
+    "sourceCommit": "aee94c6feca16933b4f2c1b2f19d14e9b66e008a",
+    "existingUrl": "https://word-to-pdf-b4dr.onrender.com/app/",
+    "notes": "Existing hosted service; imported backend passed conversion tests. Files are sent to the conversion server."
   },
   {
     "id": "devicebridge",
     "name": "DeviceBridge",
     "category": "Connectivity",
     "description": "Share files and text between devices.",
-    "status": "queued",
-    "source": "https://github.com/aksharghatole/DeviceBridge"
+    "status": "testing",
+    "source": "https://github.com/aksharghatole/DeviceBridge",
+    "sourceCommit": "62d3f05f9d880f9acf03c66ee2bc627108a9e9ca",
+    "existingUrl": "https://devicebridge-4ncq.onrender.com/",
+    "notes": "Existing hosted service; imported source passed automated browser tests. Physical-device verification pending."
   },
   {
     "id": "daily-discovery",
     "name": "Daily Discovery",
     "category": "Learning",
     "description": "Explore new knowledge and track progress.",
-    "status": "queued",
-    "source": "https://github.com/aksharghatole/Daily-Discovery"
+    "status": "testing",
+    "source": "https://github.com/aksharghatole/Daily-Discovery",
+    "sourceCommit": "a3874edd9b58c9d62caa688fd1f868c3441d322c",
+    "notes": "Automated app, authentication and API tests passed. Local-only preview; production authentication and persistence review pending."
   }
 ]

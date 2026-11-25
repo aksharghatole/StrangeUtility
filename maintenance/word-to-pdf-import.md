@@ -1,0 +1,2 @@
+# 2026-11-25 — Word-to-PDF development
+Blind web CI passed, APK dependency download failed (run 45590948142); failed jobs retry accepted. Pages artifact fix isolated in PR #3. This independent Word-to-PDF branch imports source and adds real conversion CI and temporary-file cleanup. See apps/word-to-pdf/MIGRATION.md. Portal integration and deployment pending; avoid conflicting with Blind registry changes. No source repo changes or paid resources.
