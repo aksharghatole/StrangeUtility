@@ -41,3 +41,7 @@
 - TableDelta 0.1: implement strict CSV/TSV composite-key reconciliation, conflict exclusion, schema changes, safe rendering and export. First CI pending; then offline shell, larger dataset profiling, keyboard/mobile checks. One active new app. Backend cutover blockers remain documented; no source changes.
 
 - TableDelta #17 merged; main browser 45626519582 and Pages deploy 45626519598 passed. Add app-scoped offline shell and verify offline comparison/export, cache isolation and no input persistence. Larger dataset profiling remains pending.
+
+- PR #18 merged; main browser/offline run 45648681775 passed and Pages 45648681804 attempt 2 succeeded after transient deployment failure. TableDelta export batching and 10,000-row regression proposed; CI pending. Browser memory profiling and keyboard checks still outstanding. Backend cutover blockers unchanged.
+
+- PR #19 browser run 45668571047 failed because the cache assertion still opened v2 after the worker moved to v3. Unit and portal checks passed. Fix test to inspect the single existing app cache and exact asset allowlist without creating a stale cache; rerun all checks before merge.
