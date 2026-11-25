@@ -29,3 +29,6 @@
 - Paperwork #13 merged; offline real PDF tests passed. Confirm latest production Pages deployment and physical devices.
 - Pages split packaging from deployment, validate static staging and preserve package output on deploy-only retry; verify production deployment before claiming repair.
 - Blind preview releases: manual main-only publication, checksum and debug-signing disclosure. Persistent signing and safe upgrades remain outstanding.
+
+- DeviceBridge header-authenticated stream: verify browser parity, reconnection and legacy URL rejection before any cutover; existing users must reload updated shell.
+- Blind manual release: run from main with publish_preview enabled; connector cannot dispatch. Verify release assets and update portal link only after publication.

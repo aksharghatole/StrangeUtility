@@ -7,12 +7,15 @@ try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch(args=['--no-sandbox'])
   a=browser.new_page(); b=browser.new_page(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
+  event_requests=[]
   for x in [a,b]:
+   x.on('request',lambda req: event_requests.append(req.url) if '/api/events?' in req.url else None)
    x.on('pageerror',lambda e:print('PAGE ERROR',e))
    x.goto('http://localhost:3418')
   a.click('#theme'); expect(a.locator('html')).to_have_attribute('data-theme','light'); a.reload(); expect(a.locator('html')).to_have_attribute('data-theme','light'); a.check('#historyEnabled'); b.check('#historyEnabled');
   a.fill('#name','Laptop'); a.click('#create'); expect(a.locator('#roomCode')).not_to_have_text(''); code=a.locator('#roomCode').inner_text(); expect(a.locator('#qr')).to_be_visible(); a.wait_for_function("document.querySelector('#qr').complete && document.querySelector('#qr').naturalWidth > 0")
   b.fill('#name','Phone'); b.fill('#roomInput',code); b.click('#joinForm button'); expect(a.locator('#recipient option')).to_have_text('Phone',timeout=15000); expect(b.locator('#recipient option')).to_have_text('Laptop',timeout=15000)
+  assert len(event_requests)>=2 and all('token=' not in url for url in event_requests),event_requests
   a.fill('#message','Hello from laptop'); a.click('#sendText'); expect(b.locator('#activity')).to_contain_text('Hello from laptop'); b.fill('#message','Hello from phone'); b.click('#sendText'); expect(a.locator('#activity')).to_contain_text('Hello from phone')
   a.fill('#sharedNote','Room note from laptop'); expect(b.locator('#sharedNote')).to_have_value('Room note from laptop')
   b.fill('#sharedNote','Updated by phone'); expect(a.locator('#sharedNote')).to_have_value('Updated by phone')

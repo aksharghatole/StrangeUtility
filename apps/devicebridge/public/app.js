@@ -212,7 +212,45 @@ $('activitySearch').oninput=filterActivity;
 $('clearQueue').onclick=()=>{queued=[];renderQueue();};
 const creds=()=>({code:session.code,token:session.token});
 function invite(){let u=new URL(location.pathname,location.origin);u.searchParams.set('join',session.code);return u.href;}
-async function join(create){if(busy||session)return;if(!navigator.onLine){notice('Connect to the internet to create or join a room.');return;}busy=true;$('create').disabled=true;strictPairing=$('strictPairing').checked;try{if(!window.RTCPeerConnection)throw Error('WebRTC not supported');let name=$('name').value.trim()||defaultName;localStorage.setItem('bridge-name',name);config=await fetch('/api/config').then(r=>r.json());session=await api(create?'create':'join',{name,code:$('roomInput').value});$('welcome').hidden=true;$('workspace').hidden=false;selectView('all');$('roomCode').textContent=session.code.slice(0,5)+'-'+session.code.slice(5);$('qr').src='/api/qr?invite='+encodeURIComponent(invite());events=new EventSource('/api/events?'+new URLSearchParams(creds()));events.addEventListener('peers',e=>updatePeers(JSON.parse(e.data)));events.addEventListener('signal',e=>handleSignal(JSON.parse(e.data)));events.addEventListener('ready',()=>{signalOnline=true;renderDevices();for(const p of peers.values())if(p.dc?.readyState!=='open')scheduleRetry(p);});events.onerror=()=>{signalOnline=false;$('status').textContent='Signaling interrupted · retrying';};}catch(e){notice(e.message);}finally{busy=false;$('create').disabled=false;}}
+// Stream SSE frames over fetch so the session credential never appears in the URL.
+function openEvents(credentials){
+ const controller=new AbortController();
+ const alive=()=>!controller.signal.aborted&&session?.id===credentials.id;
+ const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+ const notify=(type,data)=>{if(!alive())return;if(type==='peers')updatePeers(data);else if(type==='signal')handleSignal(data);else if(type==='ready'){signalOnline=true;renderDevices();for(const p of peers.values())if(p.dc?.readyState!=='open')scheduleRetry(p);}};
+ async function run(){
+  let delay=1000;
+  while(alive()){
+   let reader;
+   try{
+    const response=await fetch('/api/events?'+new URLSearchParams({code:credentials.code}),{headers:{Authorization:'Bearer '+credentials.token,Accept:'text/event-stream'},cache:'no-store',signal:controller.signal});
+    if(response.status===401){await response.body?.cancel();if(alive()){signalOnline=false;renderDevices();notice('Room session expired. Leave and join again.');}return;}
+    if(!response.ok||!response.body){await response.body?.cancel();throw Error('Signaling unavailable');}
+    reader=response.body.getReader();const decoder=new TextDecoder();let buffer='';
+    while(alive()){
+     const {value,done}=await reader.read();if(done)break;
+     buffer+=decoder.decode(value,{stream:true});
+     let end;
+     while((end=buffer.indexOf('\n\n'))!==-1){
+      const frame=buffer.slice(0,end);buffer=buffer.slice(end+2);
+      if(frame.length>262144)throw Error('Signaling frame too large');
+      let type='',data=[];
+      for(const line of frame.split('\n')){if(line.startsWith('event:'))type=line.slice(6).trim();else if(line.startsWith('data:'))data.push(line.slice(5).replace(/^ /,''));}
+      if(['ready','peers','signal'].includes(type)&&data.length){notify(type,JSON.parse(data.join('\n')));if(type==='ready')delay=1000;}
+     }
+     if(buffer.length>262144)throw Error('Signaling frame too large');
+    }
+   }catch(e){if(!alive())return;}
+   finally{if(reader){try{await reader.cancel();}catch{}reader.releaseLock();}}
+   if(!alive())return;
+   signalOnline=false;renderDevices();await pause(delay);delay=Math.min(delay*2,15000);
+  }
+ }
+ run().catch(()=>{if(alive()){signalOnline=false;renderDevices();}});
+ return {close:()=>controller.abort()};
+}
+
+async function join(create){if(busy||session)return;if(!navigator.onLine){notice('Connect to the internet to create or join a room.');return;}busy=true;$('create').disabled=true;strictPairing=$('strictPairing').checked;try{if(!window.RTCPeerConnection)throw Error('WebRTC not supported');let name=$('name').value.trim()||defaultName;localStorage.setItem('bridge-name',name);config=await fetch('/api/config').then(r=>r.json());session=await api(create?'create':'join',{name,code:$('roomInput').value});$('welcome').hidden=true;$('workspace').hidden=false;selectView('all');$('roomCode').textContent=session.code.slice(0,5)+'-'+session.code.slice(5);$('qr').src='/api/qr?invite='+encodeURIComponent(invite());events=openEvents(session);}catch(e){notice(e.message);}finally{busy=false;$('create').disabled=false;}}
 $('create').onclick=()=>join(true);$('joinForm').onsubmit=e=>{e.preventDefault();join(false);};$('copyInvite').onclick=()=>copy(invite());
 $('leave').onclick=()=>{if(!session)return;api('leave',creds()).catch(()=>{});events.close();for(let p of peers.values())closePeer(p);peers.clear();names.clear();session=null;resetRoomTools();for(let a of activities)dispose(a);activities.clear();updateBatch();$('activity').replaceChildren(el('p','empty','No transfers yet.'));queued=[];$('message').value='';$('activitySearch').value='';unread=0;selectView('all');memoryUI();renderQueue();$('workspace').hidden=true;$('welcome').hidden=false;$('roomInput').value='';history.replaceState(null,'',location.pathname);};
 window.addEventListener('pagehide',()=>{if(screen)stopScreen(screen,'Page closed');if(session)navigator.sendBeacon('/api/leave',new Blob([JSON.stringify(creds())],{type:'application/json'}));});
