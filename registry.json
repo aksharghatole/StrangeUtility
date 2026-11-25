@@ -4,10 +4,11 @@
     "name": "Paperwork",
     "category": "Documents",
     "description": "Edit, annotate, reorder and export PDFs locally.",
-    "status": "imported",
+    "status": "testing",
     "path": "apps/paperwork/",
     "source": "https://github.com/aksharghatole/Paperwork",
-    "sourceCommit": "ea71b24311560a1148c5079162074562e750da30"
+    "sourceCommit": "ea71b24311560a1148c5079162074562e750da30",
+    "notes": "Real PDF browser tests passed, including export and mobile navigation. Text replacement is visual; whiteout is not secure redaction."
   },
   {
     "id": "blind",
