@@ -1,0 +1,44 @@
+[
+  {
+    "id": "paperwork",
+    "name": "Paperwork",
+    "category": "Documents",
+    "description": "Edit, annotate, reorder and export PDFs locally.",
+    "status": "imported",
+    "path": "apps/paperwork/",
+    "source": "https://github.com/aksharghatole/Paperwork",
+    "sourceCommit": "ea71b24311560a1148c5079162074562e750da30"
+  },
+  {
+    "id": "blind",
+    "name": "Blind",
+    "category": "Accessibility",
+    "description": "Camera and photo colour assistant.",
+    "status": "queued",
+    "source": "https://github.com/aksharghatole/Blind"
+  },
+  {
+    "id": "word-to-pdf",
+    "name": "Word to PDF",
+    "category": "Documents",
+    "description": "Server-side document conversion with LibreOffice.",
+    "status": "queued",
+    "source": "https://github.com/aksharghatole/word-to-pdf"
+  },
+  {
+    "id": "devicebridge",
+    "name": "DeviceBridge",
+    "category": "Connectivity",
+    "description": "Share files and text between devices.",
+    "status": "queued",
+    "source": "https://github.com/aksharghatole/DeviceBridge"
+  },
+  {
+    "id": "daily-discovery",
+    "name": "Daily Discovery",
+    "category": "Learning",
+    "description": "Explore new knowledge and track progress.",
+    "status": "queued",
+    "source": "https://github.com/aksharghatole/Daily-Discovery"
+  }
+]

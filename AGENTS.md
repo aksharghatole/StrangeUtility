@@ -1,0 +1,3 @@
+# Development instructions
+
+Check main, open PRs, workflow checks and deployments first. Fix critical issues. Use branches and PRs; merge only after required checks succeed. Work on at most three active apps. Prioritize MIGRATION.md in listed order. No paid services, no ads, no credentials, no unapproved archive/deletion or modifications of source repositories. Keep local-first, accessible, responsive apps. Maintain registry, tests, backlog and truthful status. Check actual deployment before claiming live. Review source provenance and licences; no copying private data. Do not bypass Actions permissions. Record concrete blockers and continue safe work.
