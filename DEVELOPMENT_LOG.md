@@ -28,3 +28,6 @@ DeviceBridge PR #12 merged after integration and portal CI 45618691896 and 45618
 
 ## 2026-11-25 — Offline Paperwork and release pipeline
 Paperwork PR #13 merged after green real PDF/offline CI 45619328894 and portal CI 45619328036. DeviceBridge main 45619022398 passed; Pages 45619022310 again failed at deploy artifact lookup. Separate package and deployment jobs, validate staged assets before upload, reuse build artifact name on deploy retry. Add opt-in main-only Blind debug prerelease job, SHA256 checksum, immutable commit tag and clear signing caveats. No release published yet; CI and post-merge deployment pending. Original repos/services unchanged.
+
+## 2026-11-25 — Header-authenticated DeviceBridge signaling
+PR #14 merged after portal packaging, Blind APK and browser CI 45619958755, 45619958613, 45619958741. Paperwork main browser/Pages CI 45619778264 and 45619778266 succeeded. Latest main workflows still running. Manual Android release workflow is ready, but connector lacks dispatch action; no release published. Replace URL tokens in DeviceBridge SSE with Authorization-header fetch stream, bounded parser/reconnect and regression tests. Render inspection confirms existing free services still point to original repos; no service settings changed. CI pending.

@@ -14,3 +14,6 @@ Do not archive or disable the original until validated parity, data handling, de
 
 ## Signaling admission follow-up
 Add bounded per-process rate-limit storage, separate join/QR/event/signal request budgets, pre-read JSON size check, cross-origin browser fetch-metadata rejection, fixed-length constant-time token comparison, heartbeat backpressure and HTTP header/request timeouts. CI pending. Rate limits are socket-IP based and may be shared by reverse-proxy users; do not trust forwarded IP headers without a configured proxy boundary. SSE query tokens remain a logging risk; replace in a later compatible transport migration. No claim of end-to-end identity authentication or physical-network parity. Original Render service unchanged.
+
+## Header-authenticated event stream
+Replace EventSource query-token transport with a bounded fetch/SSE reader using the Authorization header, cancellation and bounded exponential reconnection. Reject legacy token URLs even when the token is valid. Update shell cache version. Old open/cached clients must reload after the updated worker activates; do not switch the current service until coordinated client/server deployment is verified. Authorization headers must still be redacted in proxy logs. Tests pending; no physical-device claim.
