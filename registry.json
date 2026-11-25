@@ -20,7 +20,7 @@
     "path": "apps/blind/",
     "sourceCommit": "4485646b40ef039e7c2068ca2d3f5c674b85ae1f",
     "notes": "Browser photo, palette, simulated camera and offline tests passed; debug APK verified. Physical-device verification pending.",
-    "apkWorkflow": "https://github.com/aksharghatole/StrangeUtility/actions/runs/45616343640"
+    "apkWorkflow": "https://github.com/aksharghatole/StrangeUtility/actions/runs/45617997034"
   },
   {
     "id": "word-to-pdf",
@@ -31,7 +31,7 @@
     "source": "https://github.com/aksharghatole/word-to-pdf",
     "sourceCommit": "aee94c6feca16933b4f2c1b2f19d14e9b66e008a",
     "existingUrl": "https://word-to-pdf-b4dr.onrender.com/app/",
-    "notes": "Existing hosted service; imported backend passed conversion tests. Files are sent to the conversion server."
+    "notes": "Existing hosted service; imported backend passed conversion, resource-limit and non-root Docker tests. Files are sent to the conversion server."
   },
   {
     "id": "devicebridge",

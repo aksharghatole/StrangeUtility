@@ -18,3 +18,7 @@
 
 - Daily Discovery PR #10 merged after auth isolation/rotation tests; production rate limits, TLS, storage and access-token revocation pending.
 - Word-to-PDF: verify body admission, single-job limits, cleanup and non-root container; review parser/dependency security and free-tier memory before backend cutover.
+
+- Word-to-PDF PR #11 merged after non-root container smoke; review parser security, service resource limits and cutover plan.
+- DeviceBridge signaling safeguards: verify new cross-origin, request-limit, token comparison and browser pairing tests; query-token transport migration and physical devices remain pending.
+- Portal: APK workflow artifact link added (expires under Actions retention; not permanent release); verify accessibility and deploy.

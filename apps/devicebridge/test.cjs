@@ -15,3 +15,22 @@ test('ZIP writer: stored entries, checksums, safe paths and duplicate names',asy
  assert.equal(bytes.readUInt16LE(bytes.length-12),2);
  await assert.rejects(makeZip([]),/Select/);
 });
+
+
+test('API rejects cross-origin requests and oversized JSON without changing room state',async()=>{
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));
+ const root='http://127.0.0.1:'+server.address().port;
+ try{
+  const cross=await fetch(root+'/api/create',{method:'POST',headers:{'Content-Type':'application/json','Sec-Fetch-Site':'cross-site'},body:'{}'});
+  assert.equal(cross.status,403);
+  const tooBig=await fetch(root+'/api/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'x'.repeat(100001)})});
+  assert.equal(tooBig.status,413);
+  const same=await fetch(root+'/api/create',{method:'POST',headers:{'Content-Type':'application/json','Sec-Fetch-Site':'same-origin'},body:JSON.stringify({name:'Test'})});
+  assert.equal(same.status,200);
+  const session=await same.json();
+  const unauthorized=await fetch(root+'/api/events?'+new URLSearchParams({code:session.code,token:'not-a-token'}));
+  assert.equal(unauthorized.status,401);
+  const leave=await fetch(root+'/api/leave',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(session)});
+  assert.equal(leave.status,200);
+ }finally{server.closeAllConnections();await new Promise(r=>server.close(r));}
+});
