@@ -70,6 +70,6 @@
     "status": "testing",
     "path": "apps/tabledelta/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/tabledelta",
-    "notes": "Version 0.2 offline deployment verified; export batching and 10,000-row regression passed PR checks. Keyboard navigation improvements pending verification."
+    "notes": "Version 0.3 main browser, keyboard and Pages deployment passed. Input-read race correction pending CI; physical-device profiling remains outstanding."
   }
 ]

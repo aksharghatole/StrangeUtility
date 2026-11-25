@@ -49,3 +49,6 @@ PR #19 remains open. Browser run https://github.com/aksharghatole/StrangeUtility
 
 ## 2026-11-26 — Keyboard workflow
 Merged [PR #19](https://github.com/aksharghatole/StrangeUtility/pull/19) after corrected browser run 45678078126 and portal run 45678078259 passed. Previous production run 45648681804 succeeded; new main deployment not yet verified. Add focus management and keyboard regression coverage for dynamic comparison steps and pagination; bump shell cache and preview version. No new dependencies or services. CI pending; no full accessibility certification claimed.
+
+## 2026-11-26 — Input loading consistency
+[PR #20](https://github.com/aksharghatole/StrangeUtility/pull/20) merged; main browser [45698250883](https://github.com/aksharghatole/StrangeUtility/actions/runs/45698250883) and Pages [45698250643](https://github.com/aksharghatole/StrangeUtility/actions/runs/45698250643) passed, including deploy job. No open PRs/issues at inspection. Correct asynchronous file-read race by disabling inspection while reads are pending, invalidating stale reports, cancelling pending reads on manual edits and resetting delimiter on import. Add delayed-read browser regression, bump shell cache, reconcile registry and README. New CI pending. No backend or source repository changes.
