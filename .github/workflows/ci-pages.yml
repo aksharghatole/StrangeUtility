@@ -41,6 +41,9 @@ jobs:
           cp apps/blind/index.html apps/blind/sw.js apps/blind/manifest.webmanifest apps/blind/icon.svg site/apps/blind/
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages-${{ github.run_attempt }}
           path: site
       - uses: actions/deploy-pages@v4
         id: deployment
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}
