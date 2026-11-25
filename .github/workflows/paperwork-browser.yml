@@ -1,0 +1,26 @@
+name: Paperwork real PDF browser tests
+on:
+  pull_request:
+    paths:
+      - 'apps/paperwork/**'
+      - '.github/workflows/paperwork-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/paperwork/**'
+      - '.github/workflows/paperwork-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-pdf:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0 pypdf==5.4.0 reportlab==4.4.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python apps/paperwork/tests/browser_smoke.py

@@ -1,0 +1,3 @@
+# Real PDF browser smoke test
+
+Run from the monorepo root: `python -m pip install playwright==1.51.0 pypdf==5.4.0 reportlab==4.4.0`, `python -m playwright install chromium`, then `python apps/paperwork/tests/browser_smoke.py`. Test creates synthetic PDFs in a temporary directory and uses actual pinned CDN PDF.js and pdf-lib; network access is required and no mock engine is used. Independent pypdf parser checks output page order, rotation, overlay image and extract count. Chromium emulates mobile dimensions; real device testing still required. Visual text replacement and secure redaction are distinct; test does not claim redaction. No personal documents needed.
