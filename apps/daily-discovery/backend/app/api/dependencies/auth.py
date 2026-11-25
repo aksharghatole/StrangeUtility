@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 from typing import Any
+from uuid import uuid4
 
 import jwt
 from fastapi import Depends, HTTPException, status
@@ -29,6 +30,7 @@ def _create_token(subject: str, *, expires_delta: timedelta, token_type: str) ->
         "exp": now + expires_delta,
         "iat": now,
         "type": token_type,
+        "jti": uuid4().hex,
     }
     return jwt.encode(payload, settings.jwt_secret_key, algorithm=settings.jwt_algorithm)
 
@@ -73,7 +75,7 @@ def get_current_user_optional(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token type")
 
     user_id = payload.get("sub")
-    if user_id is None:
+    if not isinstance(user_id, str) or not user_id.isdecimal() or len(user_id) > 18:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token payload")
 
     user = db.get(User, int(user_id))
@@ -85,6 +87,8 @@ def get_current_user_optional(
 def resolve_user(db: Session, user: User | None) -> User:
     if user is not None:
         return user
+    if get_settings().auth_mode != "local":
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required")
     from database.repository import Repository
 
     return Repository(db).get_or_create_local_user()

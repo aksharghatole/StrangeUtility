@@ -29,3 +29,7 @@ Never commit `.env` or production secrets.
 Send access tokens as `Authorization: Bearer <token>`. User-owned API routes
 use that account when a token is supplied. Anonymous requests remain supported
 for the legacy local Streamlit workflow and use the compatibility local user.
+
+## StrangeUtility security modes
+
+Default `AUTH_MODE=local`: use loopback only. Missing or old example key is replaced with a random process-local signing key; restart invalidates tokens when no explicit key is configured. The anonymous local profile is isolated from registered accounts. `AUTH_MODE=authenticated` rejects anonymous requests for user-owned state, requires a unique random secret of at least 32 characters and HS256, and never uses the local profile fallback. Generate a secret with `python -c "import secrets; print(secrets.token_urlsafe(48))"` and store it outside Git. This mode is not a public deployment approval: rate limiting, TLS, secure storage, concurrency tests, access-token revocation policy and persistent hosting are still required. Use the Streamlit UI only as a trusted local single-user application. Refresh tokens now have unique IDs and rotation atomically claims an unrevoked session. Existing anonymous data accidentally attributed to a registered account is not moved automatically; review a backup before any manual reassignment.

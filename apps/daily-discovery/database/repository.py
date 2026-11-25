@@ -118,8 +118,6 @@ class Repository:
 
         user = self.session.scalar(select(User).where(User.email == "local@daily-discovery.local").limit(1))
         if user is None:
-            user = self.session.scalar(select(User).order_by(User.id).limit(1))
-        if user is None:
             user = self.create_user(
                 email="local@daily-discovery.local",
                 display_name="Local User",

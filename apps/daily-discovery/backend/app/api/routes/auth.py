@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import update
 from sqlalchemy.orm import Session
+from datetime import datetime, timezone
 
 from backend.app.api.dependencies.auth import (
     create_access_token,
@@ -89,7 +91,7 @@ def register_user(
 def login_user(payload: LoginRequest, db: Session = Depends(get_db)) -> AuthResponse:
     repository = Repository(db)
     user = repository.get_user_by_email(payload.email.strip().lower())
-    if user is None or not repository.verify_password(user, payload.password):
+    if user is None or not user.is_active or not repository.verify_password(user, payload.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
 
     user.last_login_at = __import__("datetime").datetime.now(__import__("datetime").timezone.utc)
@@ -117,24 +119,35 @@ def refresh_token(payload: RefreshRequest, db: Session = Depends(get_db)) -> Tok
     if token_payload.get("type") != "refresh":
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token type")
 
-    user_id = int(token_payload["sub"])
+    subject = token_payload.get("sub")
+    if not isinstance(subject, str) or not subject.isdecimal() or len(subject) > 18:
+        raise HTTPException(status_code=401, detail="Invalid token payload")
+    user_id = int(subject)
     user = repository.get_user_by_id(user_id)
-    if user is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unknown user")
+    if user is None or not user.is_active:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unknown or inactive user")
 
     sessions = db.query(UserSession).filter(UserSession.user_id == user.id, UserSession.revoked_at.is_(None)).all()
-    active = False
+    active_session = None
     for session in sessions:
         try:
             if repository.password_hasher.verify(session.refresh_token_hash, payload.refresh_token):
-                active = True
+                active_session = session
                 break
         except Exception:
             continue
-    if not active:
+    if active_session is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh token is not active")
 
-    repository.revoke_session(user, payload.refresh_token)
+    claimed = db.execute(
+        update(UserSession)
+        .where(UserSession.id == active_session.id, UserSession.revoked_at.is_(None))
+        .values(revoked_at=datetime.now(timezone.utc))
+        .execution_options(synchronize_session=False)
+    )
+    if claimed.rowcount != 1:
+        db.rollback()
+        raise HTTPException(status_code=401, detail="Refresh token is not active")
     access_token = create_access_token(user)
     new_refresh_token = create_refresh_token(user)
     repository.create_session_for_user(user, refresh_token=new_refresh_token)

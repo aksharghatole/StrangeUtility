@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
-from backend.app.api.dependencies.auth import get_current_user_optional
+from backend.app.api.dependencies.auth import get_current_user_optional, resolve_user
 from backend.app.dependencies.database import get_db
 from backend.app.schemas.discovery import DiscoveryListResponse, DiscoveryResponse, FavoritePayload
 from database.models import Discovery, User
@@ -27,9 +27,7 @@ def _to_response(discovery) -> DiscoveryResponse:
 
 
 def _resolve_favorite_user(db: Session, user: User | None = None) -> User:
-    if user is not None:
-        return user
-    return Repository(db).get_or_create_local_user()
+    return resolve_user(db, user)
 
 
 @router.post(
