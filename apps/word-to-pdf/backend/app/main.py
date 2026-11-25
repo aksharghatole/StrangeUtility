@@ -7,16 +7,29 @@ from pathlib import Path
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from starlette.background import BackgroundTask
 
 from .config import ALLOWED_EXTENSIONS, MAX_FILE_SIZE
 from .converter import ConversionError, convert_to_pdf
+from .guard import ConversionGuard
 
 app = FastAPI(
     title="Word to PDF",
     description="Convert Word documents to PDF. Self-hosted, privacy-first.",
-    version="0.1.0",
+    version="0.2.0",
 )
+app.add_middleware(ConversionGuard, max_body_bytes=MAX_FILE_SIZE + 1024 * 1024)
+
+
+class TemporaryPDFResponse(FileResponse):
+    def __init__(self, path, *, job_dir, **kwargs):
+        super().__init__(path, **kwargs)
+        self.job_dir = job_dir
+
+    async def __call__(self, scope, receive, send):
+        try:
+            await super().__call__(scope, receive, send)
+        finally:
+            shutil.rmtree(self.job_dir, ignore_errors=True)
 
 
 @app.get("/api/health")
@@ -59,12 +72,12 @@ async def convert(file: UploadFile = File(...)) -> FileResponse:
         except ConversionError as exc:
             raise HTTPException(status_code=500, detail="Document conversion failed.") from exc
         download_name = Path(file.filename).with_suffix(".pdf").name
-        response = FileResponse(
+        response = TemporaryPDFResponse(
             pdf_path,
+            job_dir=job_dir,
             media_type="application/pdf",
             filename=download_name,
             headers={"Cache-Control": "no-store"},
-            background=BackgroundTask(shutil.rmtree, job_dir, ignore_errors=True),
         )
         delivered = True
         return response

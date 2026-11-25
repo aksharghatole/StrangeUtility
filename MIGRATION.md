@@ -5,7 +5,7 @@ Original repositories remain untouched. No archival until user approves and pari
 | App | Source | Status | Next gate |
 |---|---|---|---|
 | Paperwork | [source commit](https://github.com/aksharghatole/Paperwork/tree/ea71b24311560a1148c5079162074562e750da30) | Merged; real PDF browser tests passed | Physical devices, dependency and licence review |
-| Blind | [source commit](https://github.com/aksharghatole/Blind/tree/4485646b40ef039e7c2068ca2d3f5c674b85ae1f) | Merged; web CI and debug APK passed | Camera, offline and physical-device tests |
+| Blind | [source commit](https://github.com/aksharghatole/Blind/tree/4485646b40ef039e7c2068ca2d3f5c674b85ae1f) | Merged; browser/offline tests and debug APK passed | Physical camera and native device tests |
 | word-to-pdf | [source](https://github.com/aksharghatole/word-to-pdf) | Merged; conversion tests passed | Security review; existing service on free plan |
 | DeviceBridge | [source](https://github.com/aksharghatole/DeviceBridge) | Merged; HTTP/browser tests passed | Physical devices, licence review, backend switch |
 | Daily Discovery | [source](https://github.com/aksharghatole/Daily-Discovery) | Merged; automated tests passed, local-only | Production auth, persistence and licences |
@@ -17,3 +17,5 @@ See app-specific MIGRATION.md files. Render service configuration verified free 
 Blind: app-relative PWA scope and namespaced cache and palette; same-origin legacy data migration is non-destructive. Original app and APK remain rollback paths. Full history not imported. Source snapshot contains no standalone LICENSE. Earlier Maven Central 429 failures resolved in run 45616343640; debug APK built, signature verified, artifact uploaded. Daily Discovery PR #7 merged after CI 45612994583. DeviceBridge main CI and Pages run 45612452928 succeeded. No replacements of backend services.
 
 All five source imports merged. Paperwork PR #8 merged after green real-engine CI. No source repository ready to retire yet.
+
+Blind PR #9 merged after browser 45617759146, APK 45617759159 and portal 45617759253 passed. Daily Discovery PR #10 merged after security regression CI 45617684928 and portal 45617685026 passed. Word-to-PDF resource admission and container hardening proposed; CI pending. Existing hosted service unchanged.

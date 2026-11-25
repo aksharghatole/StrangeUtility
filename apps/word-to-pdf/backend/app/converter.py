@@ -3,6 +3,8 @@
 import asyncio
 import shutil
 import subprocess
+import os
+import signal
 from contextlib import suppress
 import uuid
 from pathlib import Path
@@ -69,15 +71,21 @@ async def convert_to_pdf(
         *cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        **({"start_new_session": True} if os.name == "posix" else {}),
     )
     try:
         _, stderr = await asyncio.wait_for(proc.communicate(), timeout=60)
-    except (TimeoutError, asyncio.CancelledError):
+    except (TimeoutError, asyncio.CancelledError) as exc:
         with suppress(ProcessLookupError):
-            proc.kill()
+            if os.name == "posix":
+                os.killpg(proc.pid, signal.SIGKILL)
+            else:
+                proc.kill()
         await proc.wait()
         shutil.rmtree(job_dir, ignore_errors=True)
-        raise ConversionError("Conversion timed out.")
+        if isinstance(exc, asyncio.CancelledError):
+            raise
+        raise ConversionError("Conversion timed out.") from exc
 
     if proc.returncode != 0:
         raise ConversionError(
