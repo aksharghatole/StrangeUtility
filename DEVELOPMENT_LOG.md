@@ -8,3 +8,6 @@ Word-to-PDF PR #4 merged, CI 45611652320 and main 45612096380 passed. DeviceBrid
 
 ## 2026-11-25 — Reconcile Blind with current main
 Daily Discovery PR #7 merged after app/auth/API CI 45612994583 and portal CI 45612994469 passed. DeviceBridge main CI 45612453033 and Pages deployment 45612452928 succeeded. Blind retry failed with Maven Central 429 (45590948142 attempt 2); preserve actual APK check. Merge current main into Blind branch, keep all other imported apps and central registry additions, retain artifact readiness gate, add Blind's static assets to staging. New CI pending; no originals changed.
+
+## 2026-11-25 — All five sources merged; Paperwork verification
+Blind web CI 45616343622 and APK CI 45616343640 passed including signature verification and artifact upload; PR #2 merged at 4c642e2. Previous Pages retry 45616239763 and Daily Discovery main CI 45616239671 passed. Added real PDF browser integration CI with synthetic fixture generation and independent output validation. Test results pending. Physical devices, licenses, security and replacement backend deployment still outstanding. Original repositories unchanged.

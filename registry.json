@@ -18,7 +18,8 @@
     "source": "https://github.com/aksharghatole/Blind",
     "path": "apps/blind/",
     "sourceCommit": "4485646b40ef039e7c2068ca2d3f5c674b85ae1f",
-    "notes": "Web and native source imported; Android APK and physical-device verification pending."
+    "notes": "Web CI and debug APK build/signature checks passed. Camera, offline and physical-device verification pending.",
+    "apkWorkflow": "https://github.com/aksharghatole/StrangeUtility/actions/runs/45616343640"
   },
   {
     "id": "word-to-pdf",
