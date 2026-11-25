@@ -67,9 +67,9 @@
     "name": "TableDelta",
     "category": "Data tools",
     "description": "Compare CSV snapshots by stable keys, identify changed records and export reconciliation reports.",
-    "status": "imported",
+    "status": "testing",
     "path": "apps/tabledelta/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/tabledelta",
-    "notes": "New local-first preview. Composite keys, duplicate conflict reporting and JSON/CSV export; browser verification pending."
+    "notes": "Version 0.1 browser tests and Pages deployment passed. Version 0.2 offline shell proposed; offline regression pending. No persistent input storage."
   }
 ]

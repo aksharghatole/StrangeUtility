@@ -39,3 +39,5 @@
 
 - PR #16 merged after backend and portal checks; new main deployment verification pending.
 - TableDelta 0.1: implement strict CSV/TSV composite-key reconciliation, conflict exclusion, schema changes, safe rendering and export. First CI pending; then offline shell, larger dataset profiling, keyboard/mobile checks. One active new app. Backend cutover blockers remain documented; no source changes.
+
+- TableDelta #17 merged; main browser 45626519582 and Pages deploy 45626519598 passed. Add app-scoped offline shell and verify offline comparison/export, cache isolation and no input persistence. Larger dataset profiling remains pending.
