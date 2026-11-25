@@ -8,7 +8,7 @@
     "path": "apps/paperwork/",
     "source": "https://github.com/aksharghatole/Paperwork",
     "sourceCommit": "ea71b24311560a1148c5079162074562e750da30",
-    "notes": "Real PDF browser tests passed, including export and mobile navigation. Visual text replacement is not secure redaction. Local engine packaging and offline verification in progress."
+    "notes": "Real PDF rendering, export, local dependency integrity and offline reload/export tests passed. Visual text replacement is not secure redaction; browser cache may be evicted."
   },
   {
     "id": "blind",
