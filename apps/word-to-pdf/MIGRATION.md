@@ -11,3 +11,5 @@ Rollback: retain original repo/service; revert this app's import if needed. Do n
 
 ## Resource safety follow-up
 Verified import CI 45611652320 and main 45612096380. Added ASGI request-body admission cap (21 MiB including multipart overhead), one in-flight upload/conversion/download per worker, 30-second upload deadline, response cleanup even on send failure, POSIX subprocess group termination and non-root Docker runtime. Existing service remains unchanged. These limits are per process, not global rate limiting, and LibreOffice is not a hardened sandbox. CI pending. Docker build and deployment remain separate gates; no cutover until verified. Reverse proxy limits, document parser security, dependency updates and container memory/CPU limits remain necessary.
+
+PR #11 merged; real Docker smoke passed on PR 45618215910 and main 45618535666. Existing free service has not switched. See central cutover checklist.

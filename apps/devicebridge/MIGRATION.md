@@ -17,3 +17,5 @@ Add bounded per-process rate-limit storage, separate join/QR/event/signal reques
 
 ## Header-authenticated event stream
 Replace EventSource query-token transport with a bounded fetch/SSE reader using the Authorization header, cancellation and bounded exponential reconnection. Reject legacy token URLs even when the token is valid. Update shell cache version. Old open/cached clients must reload after the updated worker activates; do not switch the current service until coordinated client/server deployment is verified. Authorization headers must still be redacted in proxy logs. Tests pending; no physical-device claim.
+
+Header authentication migration merged in PR #15 after CI 45620451671. Production still uses original repository and needs a coordinated cutover; no physical-network verification claimed.

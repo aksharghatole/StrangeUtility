@@ -31,3 +31,6 @@ Paperwork PR #13 merged after green real PDF/offline CI 45619328894 and portal C
 
 ## 2026-11-25 — Header-authenticated DeviceBridge signaling
 PR #14 merged after portal packaging, Blind APK and browser CI 45619958755, 45619958613, 45619958741. Paperwork main browser/Pages CI 45619778264 and 45619778266 succeeded. Latest main workflows still running. Manual Android release workflow is ready, but connector lacks dispatch action; no release published. Replace URL tokens in DeviceBridge SSE with Authorization-header fetch stream, bounded parser/reconnect and regression tests. Render inspection confirms existing free services still point to original repos; no service settings changed. CI pending.
+
+## 2026-11-25 — Published Blind preview and backend cutover planning
+Manual Android workflow 45620567477 passed build/signature and release publication; release blind-preview-957522aa3249 contains 1,192,347-byte APK and SHA256SUMS.txt. DeviceBridge PR #15 merged after CI 45620451671 and 45620451695. Pages 45620295914 and Blind main APK/browser checks passed. Add verified permanent release links and backend cutover checklist based on existing free service configurations. No new service or production cutover. Portal CI pending.

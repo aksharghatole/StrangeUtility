@@ -25,3 +25,5 @@ Word-to-PDF PR #11 merged at 8afb1fd after conversion and non-root Docker smoke 
 DeviceBridge PR #12 merged after CI 45618691896 and 45618691825. Paperwork same-origin engine packaging and offline tests proposed; download and offline CI pending. Browser cache may be evicted; documents remain memory-only. Existing hosted services unchanged.
 
 Paperwork PR #13 merged after verified same-origin package preparation and offline PDF CI 45619328894 and portal CI 45619328036. DeviceBridge main CI 45619022398 passed. Pages run 45619022310 failed artifact retrieval after successful upload/readiness. Proposed separate package/deploy jobs with retry-safe artifact output and staging validation. Android manual preview prerelease workflow proposed; no release yet. No production signing key or backend switch.
+
+Blind preview release published by manual run 45620567477; APK and checksum assets confirmed. DeviceBridge PR #15 merged at 2c01b86 after successful CI 45620451671 and 45620451695. Latest verified Pages deployment 45620295914 passed. See docs/backend-cutover.md for outstanding gates; original services unchanged.
