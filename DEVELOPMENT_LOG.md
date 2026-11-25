@@ -14,3 +14,5 @@ Blind web CI 45616343622 and APK CI 45616343640 passed including signature verif
 
 ## 2026-11-25 — Paperwork verification and Blind browser tests
 Paperwork PR #8 merged after real PDF CI 45616957015 and portal CI 45616956982 passed. Blind main APK 45616793469 and Pages 45616793167 passed. Add Blind browser coverage for synthetic photo, manual lookup, palette export, same-origin storage migration, accessibility simulation, outfit comparison, offline shell and simulated camera. No physical-device claim; tests pending.
+
+Blind browser run 45617315735 reached the offline stage (photo, CSV, assistance and simulated camera assertions succeeded), then timed out because worker registration explicitly required https: even on trustworthy loopback HTTP. Register only in browser secure contexts (including loopback) with explicit app-relative scope; keep native WebView exclusion. Retry full unmodified browser test; verification pending.

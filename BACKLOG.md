@@ -13,3 +13,5 @@
 
 - Daily Discovery PR #7 merged after green CI; prioritize safe local-only defaults and production auth isolation before any hosting.
 - Blind PR #2 merged after green web and APK CI; verify post-merge deployment and native artifact.
+
+- Blind PR #9: verify worker registration in secure contexts and full offline browser smoke after repair; physical hardware still pending.
