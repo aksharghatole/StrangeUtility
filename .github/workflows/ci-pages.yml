@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: read
       pages: write
       id-token: write
     environment:
@@ -42,6 +43,19 @@ jobs:
         with:
           name: github-pages-${{ github.run_attempt }}
           path: site
+      - name: Wait for Pages artifact metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_NAME: github-pages-${{ github.run_attempt }}
+        run: |
+          for attempt in $(seq 1 12); do
+            count=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" --jq '[.artifacts[] | select(.name == env.ARTIFACT_NAME and .expired == false)] | length') || count=0
+            if [ "$count" = 1 ]; then exit 0; fi
+            if [ "$count" -gt 1 ]; then echo "::error::Duplicate deployment artifact"; exit 1; fi
+            sleep 5
+          done
+          echo "::error::Deployment artifact not visible after 60 seconds"
+          exit 1
       - uses: actions/deploy-pages@v4
         id: deployment
         with:
