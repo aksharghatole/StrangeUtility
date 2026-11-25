@@ -19,8 +19,16 @@
     "source": "https://github.com/aksharghatole/Blind",
     "path": "apps/blind/",
     "sourceCommit": "4485646b40ef039e7c2068ca2d3f5c674b85ae1f",
-    "notes": "Browser photo, palette, simulated camera and offline tests passed; debug APK verified. Physical-device verification pending.",
-    "apkWorkflow": "https://github.com/aksharghatole/StrangeUtility/actions/runs/45617997034"
+    "notes": "Browser and offline tests passed. Published debug-signed Android testing APK; physical-device checks pending. Export saved colours before upgrading; signing keys may differ.",
+    "apkWorkflow": "https://github.com/aksharghatole/StrangeUtility/actions/runs/45620567477",
+    "androidRelease": {
+      "tag": "blind-preview-957522aa3249",
+      "url": "https://github.com/aksharghatole/StrangeUtility/releases/tag/blind-preview-957522aa3249",
+      "apk": "https://github.com/aksharghatole/StrangeUtility/releases/download/blind-preview-957522aa3249/Blind-Android-preview.apk",
+      "checksum": "https://github.com/aksharghatole/StrangeUtility/releases/download/blind-preview-957522aa3249/SHA256SUMS.txt",
+      "sizeBytes": 1192347,
+      "signing": "debug"
+    }
   },
   {
     "id": "word-to-pdf",
