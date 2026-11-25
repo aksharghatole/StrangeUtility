@@ -33,12 +33,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python apps/paperwork/prepare_vendor.py
       - run: |
           mkdir -p site/apps/paperwork site/apps/blind site/packages/ui site/portal
           cp index.html registry.json site/
           cp packages/ui/portal.css site/packages/ui/
           cp portal/portal.js site/portal/
-          cp apps/paperwork/index.html site/apps/paperwork/
+          cp apps/paperwork/index.html apps/paperwork/sw.js apps/paperwork/offline-assets.js site/apps/paperwork/
+          cp -R apps/paperwork/vendor site/apps/paperwork/
           cp apps/blind/index.html apps/blind/sw.js apps/blind/manifest.webmanifest apps/blind/icon.svg site/apps/blind/
       - uses: actions/upload-pages-artifact@v3
         with:

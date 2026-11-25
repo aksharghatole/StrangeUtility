@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "packages": [
+    {
+      "name": "pdfjs-dist",
+      "version": "4.10.38",
+      "url": "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-4.10.38.tgz",
+      "integrity": "sha512-/Y3fcFrXEAsMjJXeL9J8+ZG9U01LbuWaYypvDW2ycW1jL269L3js3DVBjDJ0Up9Np1uqDXsDrRihHANhZOlwdQ==",
+      "license": "Apache-2.0",
+      "integrityCrosscheck": [
+        "https://github.com/whrichd/budgeting/blob/main/package-lock.json",
+        "https://github.com/emollick/concord/blob/main/package-lock.json"
+      ]
+    },
+    {
+      "name": "pdf-lib",
+      "version": "1.17.1",
+      "url": "https://registry.npmjs.org/pdf-lib/-/pdf-lib-1.17.1.tgz",
+      "integrity": "sha512-V/mpyJAoTsN4cnP31vc0wfNA1+p20evqqnap0KLoRUN0Yk/p3wN52DOEsL4oBFcLdb76hlpKPtzJIgo67j/XLw==",
+      "license": "MIT",
+      "integrityCrosscheck": [
+        "https://github.com/Orkas-AI/Orkas/blob/main/package-lock.json",
+        "https://github.com/Parvjain2003/pdf_merge/blob/main/package-lock.json"
+      ]
+    }
+  ]
+}

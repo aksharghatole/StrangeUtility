@@ -56,6 +56,7 @@ def main():
             page = desktop.new_page()
             outgoing = []
             page.on("request", lambda req: outgoing.append((req.method, req.url)))
+            page.route('**/*', lambda route: route.continue_() if route.request.url.startswith(url.split('/apps/')[0] + '/') else route.abort())
             ready(page, url)
             open_pdf(page, original)
             wait_render(page, "1 / 2")
@@ -105,7 +106,19 @@ def main():
             single = folder / "single.pdf"
             extracted.value.save_as(str(single))
             assert len(PdfReader(str(single)).pages) == 1
-            assert not any(method not in ("GET", "HEAD") for method, _ in outgoing), outgoing
+            assert not any(method not in ('GET', 'HEAD') or not address.startswith(url.split('/apps/')[0] + '/') for method, address in outgoing), outgoing
+            page.wait_for_function('navigator.serviceWorker.controller !== null', timeout=60000)
+            desktop.set_offline(True)
+            page.reload(wait_until='load')
+            expect(page.locator('#status')).to_contain_text('Ready', timeout=30000)
+            open_pdf(page, original)
+            wait_render(page, '1 / 2')
+            with page.expect_download(timeout=60000) as offline_download:
+                page.locator('#export').click()
+            offline_file = folder / 'offline.pdf'
+            offline_download.value.save_as(str(offline_file))
+            assert len(PdfReader(str(offline_file)).pages) == 2
+            desktop.set_offline(False)
             desktop.close()
             mobile = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
             phone = mobile.new_page()
