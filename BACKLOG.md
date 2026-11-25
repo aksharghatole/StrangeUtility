@@ -7,3 +7,5 @@
 - After migration, validate new useful app ideas and improve shared UI.
 
 - Verify PR #2 Android SDK repair and attempt-specific Pages artifact deployment; do not merge until checks pass.
+
+- Confirm pinned Ubuntu 24.04 and explicit Android SDK packages build Blind; do not merge while APK checks fail.
