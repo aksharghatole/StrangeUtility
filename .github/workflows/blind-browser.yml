@@ -1,0 +1,26 @@
+name: Blind browser integration
+on:
+  pull_request:
+    paths:
+      - 'apps/blind/**'
+      - '.github/workflows/blind-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/blind/**'
+      - '.github/workflows/blind-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0 pillow==11.2.1
+      - run: python -m playwright install --with-deps chromium
+      - run: python apps/blind/tests/browser_smoke.py

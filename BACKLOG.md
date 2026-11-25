@@ -1,7 +1,7 @@
 # Backlog
 
 - Verify foundation CI and Pages deployment.
-- Run real PDF fixtures and browser interactions for Paperwork; review licence and CDN dependency/offline improvements.
+- Paperwork real PDF fixtures and browser tests passed; review licence, CDN dependency/offline improvements and physical devices.
 - All five source imports merged; complete functional and deployment verification.
 - Preserve original deployments and data export/import; record rollback and parity.
 - After migration, validate new useful app ideas and improve shared UI.
