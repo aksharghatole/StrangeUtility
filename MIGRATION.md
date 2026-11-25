@@ -1,0 +1,13 @@
+# Migration tracker
+
+Original repositories remain untouched. No archival until user approves and parity, data migration and deployment are verified.
+
+| App | Source | Status | Next gate |
+|---|---|---|---|
+| Paperwork | [source commit](https://github.com/aksharghatole/Paperwork/tree/ea71b24311560a1148c5079162074562e750da30) | Code imported, unverified | Real PDF import/export and mobile tests; confirm licence |
+| Blind | [source](https://github.com/aksharghatole/Blind) | Queued | Inspect PWA scope, colour storage, Android pipeline |
+| word-to-pdf | [source](https://github.com/aksharghatole/word-to-pdf) | Queued | Preserve LibreOffice, review free backend |
+| DeviceBridge | [source](https://github.com/aksharghatole/DeviceBridge) | Queued | Preserve WebRTC signaling and test two devices |
+| Daily Discovery | [source](https://github.com/aksharghatole/Daily-Discovery) | Queued | Assess persistence and Streamlit hosting |
+
+Paperwork snapshot: original files reviewed at root, source HTML references pinned CDN PDF libraries; no standalone licence file found. Snapshot imported, not full Git history. Existing original is rollback path. Visual text replacement is not native text editing or secure redaction. Actual PDF engine tests pending.
