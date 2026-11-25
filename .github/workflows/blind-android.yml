@@ -1,6 +1,11 @@
 name: Blind Android APK
 on:
   workflow_dispatch:
+    inputs:
+      publish_preview:
+        description: Publish a debug-signed Android preview prerelease
+        type: boolean
+        default: false
   pull_request:
     paths:
       - 'apps/blind/**'
@@ -40,3 +45,34 @@ jobs:
           name: Blind-Android-debug
           path: apps/blind/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+
+  publish-preview:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_preview == true
+    needs: apk
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    concurrency:
+      group: blind-preview-release
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Blind-Android-debug
+          path: release
+      - name: Publish verified debug APK preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test -s release/app-debug.apk
+          mv release/app-debug.apk release/Blind-Android-preview.apk
+          (cd release && sha256sum Blind-Android-preview.apk > SHA256SUMS.txt)
+          tag="blind-preview-${GITHUB_SHA:0:12}"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::error::A release for this commit already exists; refusing to replace its assets."
+            exit 1
+          fi
+          gh release create "$tag" release/Blind-Android-preview.apk release/SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease --latest=false \
+            --title "Blind Android testing preview ${GITHUB_SHA:0:12}" \
+            --notes "Debug-signed APK for sideload testing, built and signature-checked in Actions run $GITHUB_RUN_ID. Not a production or Play Store release. Physical-device testing is outstanding. Ephemeral debug signing keys may differ between builds; upgrades can fail. Do not uninstall an existing app before exporting its saved colours. SHA256SUMS.txt is provided for integrity verification."

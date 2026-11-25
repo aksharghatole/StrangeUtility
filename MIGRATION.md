@@ -23,3 +23,5 @@ Blind PR #9 merged after browser 45617759146, APK 45617759159 and portal 4561775
 Word-to-PDF PR #11 merged at 8afb1fd after conversion and non-root Docker smoke CI 45618215910 and portal CI 45618215775. Existing Render service not switched. DeviceBridge admission safeguards proposed, portal links and accessibility improved; CI pending. Blind main APK 45617997034, browser 45617997192 and Daily Discovery main 45618024083 passed.
 
 DeviceBridge PR #12 merged after CI 45618691896 and 45618691825. Paperwork same-origin engine packaging and offline tests proposed; download and offline CI pending. Browser cache may be evicted; documents remain memory-only. Existing hosted services unchanged.
+
+Paperwork PR #13 merged after verified same-origin package preparation and offline PDF CI 45619328894 and portal CI 45619328036. DeviceBridge main CI 45619022398 passed. Pages run 45619022310 failed artifact retrieval after successful upload/readiness. Proposed separate package/deploy jobs with retry-safe artifact output and staging validation. Android manual preview prerelease workflow proposed; no release yet. No production signing key or backend switch.
