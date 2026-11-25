@@ -14,8 +14,11 @@
     "name": "Blind",
     "category": "Accessibility",
     "description": "Camera and photo colour assistant.",
-    "status": "queued",
-    "source": "https://github.com/aksharghatole/Blind"
+    "status": "imported",
+    "source": "https://github.com/aksharghatole/Blind",
+    "path": "apps/blind/",
+    "sourceCommit": "4485646b40ef039e7c2068ca2d3f5c674b85ae1f",
+    "notes": "Web and native source imported; Android APK and physical-device verification pending."
   },
   {
     "id": "word-to-pdf",
@@ -44,9 +47,9 @@
     "name": "Daily Discovery",
     "category": "Learning",
     "description": "Explore new knowledge and track progress.",
-    "status": "imported",
+    "status": "testing",
     "source": "https://github.com/aksharghatole/Daily-Discovery",
     "sourceCommit": "a3874edd9b58c9d62caa688fd1f868c3441d322c",
-    "notes": "Local-only preview. No public deployment; authentication and persistence review pending."
+    "notes": "Automated app, authentication and API tests passed. Local-only preview; production authentication and persistence review pending."
   }
 ]

@@ -10,3 +10,6 @@
 - Blind PR #2: keep Android check required; revisit Maven 429, reconcile central registry and documentation on merge.
 - Word-to-PDF and DeviceBridge: original free Render service links in portal; review security, licences and real deployment parity before any cutover.
 - Daily Discovery: run tests, fix upstream failures, require auth/persistence review and explicit free hosting feasibility before public exposure; exclude runtime DBs.
+
+- Daily Discovery PR #7 merged after green CI; prioritize safe local-only defaults and production auth isolation before any hosting.
+- Blind PR #2 reconciled with current main without discarding any of the other migrations; check new web and APK CI before merge. No dependency mirror bypass.
