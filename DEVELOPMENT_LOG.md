@@ -46,3 +46,6 @@ PR #18 merged; main ff843f6 browser/offline run 45648681775 passed. Pages run 45
 
 ## 2026-11-26 — TableDelta export regression repair
 PR #19 remains open. Browser run https://github.com/aksharghatole/StrangeUtility/actions/runs/45668571047 failed at cache inspection: test opened obsolete v2 while worker uses v3. Unit tests and portal run 45668570905 passed. Main deployment 45648681804 remains successful. Replace hard-coded cache version with enumeration of exactly one existing app cache and exact expected URLs, preserving offline reload/export assertions. Updated existing PR rather than creating overlapping work. New checks pending; no service changes.
+
+## 2026-11-26 — Keyboard workflow
+Merged [PR #19](https://github.com/aksharghatole/StrangeUtility/pull/19) after corrected browser run 45678078126 and portal run 45678078259 passed. Previous production run 45648681804 succeeded; new main deployment not yet verified. Add focus management and keyboard regression coverage for dynamic comparison steps and pagination; bump shell cache and preview version. No new dependencies or services. CI pending; no full accessibility certification claimed.

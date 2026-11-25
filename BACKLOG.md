@@ -45,3 +45,5 @@
 - PR #18 merged; main browser/offline run 45648681775 passed and Pages 45648681804 attempt 2 succeeded after transient deployment failure. TableDelta export batching and 10,000-row regression proposed; CI pending. Browser memory profiling and keyboard checks still outstanding. Backend cutover blockers unchanged.
 
 - PR #19 browser run 45668571047 failed because the cache assertion still opened v2 after the worker moved to v3. Unit and portal checks passed. Fix test to inspect the single existing app cache and exact asset allowlist without creating a stale cache; rerun all checks before merge.
+
+- PR #19 merged at 84c3e4f after green corrected browser 45678078126 and portal 45678078259. Main deployment pending verification. Add keyboard focus transitions for matching, results, pagination and clearing; browser regression pending. Physical device and backend cutover blockers unchanged.
