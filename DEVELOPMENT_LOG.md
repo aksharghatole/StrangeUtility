@@ -34,3 +34,6 @@ PR #14 merged after portal packaging, Blind APK and browser CI 45619958755, 4561
 
 ## 2026-11-25 — Published Blind preview and backend cutover planning
 Manual Android workflow 45620567477 passed build/signature and release publication; release blind-preview-957522aa3249 contains 1,192,347-byte APK and SHA256SUMS.txt. DeviceBridge PR #15 merged after CI 45620451671 and 45620451695. Pages 45620295914 and Blind main APK/browser checks passed. Add verified permanent release links and backend cutover checklist based on existing free service configurations. No new service or production cutover. Portal CI pending.
+
+## 2026-11-25 — First new utility: TableDelta
+Merged PR #16 after CI 45621246788, 45621246467 and 45621246443. DeviceBridge main CI 45621121463 and Pages 45621121460 passed. Researched CSV diff alternatives, RFC 4180 and OWASP spreadsheet formula risk; selected a bounded local-first composite-key reconciliation tool. Implemented strict CSV/TSV parser, duplicate/blank key conflict reports, schema differences, searchable paginated records, JSON and spreadsheet-oriented CSV export, responsive UI and unit/browser test workflows. Registry and Pages staging updated; CI pending. No new service or costs. Remaining original-app migration blockers remain in docs/backend-cutover.md.

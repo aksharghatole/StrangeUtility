@@ -28,13 +28,14 @@ jobs:
       - run: python apps/paperwork/prepare_vendor.py
       - name: Stage static application directory
         run: |
-          mkdir -p site/apps/paperwork site/apps/blind site/packages/ui site/portal
+          mkdir -p site/apps/paperwork site/apps/blind site/apps/tabledelta site/packages/ui site/portal
           cp index.html registry.json site/
           cp packages/ui/portal.css site/packages/ui/
           cp portal/portal.js site/portal/
           cp apps/paperwork/index.html apps/paperwork/sw.js apps/paperwork/offline-assets.js site/apps/paperwork/
           cp -R apps/paperwork/vendor site/apps/paperwork/
           cp apps/blind/index.html apps/blind/sw.js apps/blind/manifest.webmanifest apps/blind/icon.svg site/apps/blind/
+          cp apps/tabledelta/index.html apps/tabledelta/style.css apps/tabledelta/app.mjs apps/tabledelta/core.mjs site/apps/tabledelta/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name

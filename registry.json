@@ -61,5 +61,15 @@
     "source": "https://github.com/aksharghatole/Daily-Discovery",
     "sourceCommit": "a3874edd9b58c9d62caa688fd1f868c3441d322c",
     "notes": "Application and authentication regression tests passed. Local-only preview; production hosting and security review pending."
+  },
+  {
+    "id": "tabledelta",
+    "name": "TableDelta",
+    "category": "Data tools",
+    "description": "Compare CSV snapshots by stable keys, identify changed records and export reconciliation reports.",
+    "status": "imported",
+    "path": "apps/tabledelta/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/tabledelta",
+    "notes": "New local-first preview. Composite keys, duplicate conflict reporting and JSON/CSV export; browser verification pending."
   }
 ]
