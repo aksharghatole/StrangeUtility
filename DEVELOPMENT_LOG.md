@@ -43,3 +43,6 @@ PR #17 merged at 1796c0a; PR checks 45621926701 and 45621927019 passed. Main bro
 
 ## 2026-11-25 — Deployment recovered and bounded CSV export allocation
 PR #18 merged; main ff843f6 browser/offline run 45648681775 passed. Pages run 45648681804 attempt 2 succeeded. No open PRs/issues at inspection. Replace per-field export row arrays with batches of encoded CSV lines, preserving output format; add maximum-row and input-limit regressions, bump offline cache version, reconcile registry status. New CI pending; no measured memory or speed claim. Original repos and services unchanged.
+
+## 2026-11-26 — TableDelta export regression repair
+PR #19 remains open. Browser run https://github.com/aksharghatole/StrangeUtility/actions/runs/45668571047 failed at cache inspection: test opened obsolete v2 while worker uses v3. Unit tests and portal run 45668570905 passed. Main deployment 45648681804 remains successful. Replace hard-coded cache version with enumeration of exactly one existing app cache and exact expected URLs, preserving offline reload/export assertions. Updated existing PR rather than creating overlapping work. New checks pending; no service changes.

@@ -55,10 +55,14 @@ def main():
             expect(page.locator("#offline-status")).to_contain_text("Offline shell ready")
             assert page.evaluate("""async () => {
                 const reg = await navigator.serviceWorker.ready;
-                const cache = await caches.open('strangeutility-tabledelta-shell-v2');
-                const keys = await cache.keys();
-                return reg.scope.endsWith('/apps/tabledelta/') && keys.length === 5 &&
-                    keys.every(k => k.url.startsWith(reg.scope));
+                const names = (await caches.keys()).filter(name => name.startsWith('strangeutility-tabledelta-shell-'));
+                if (names.length !== 1) return false;
+                const cache = await caches.open(names[0]);
+                const actual = (await cache.keys()).map(k => k.url).sort();
+                const expected = ['./', 'index.html', 'style.css', 'app.mjs', 'core.mjs']
+                    .map(path => new URL(path, reg.scope).href).sort();
+                return reg.scope.endsWith('/apps/tabledelta/') &&
+                    JSON.stringify(actual) === JSON.stringify(expected);
             }""")
             page.context.set_offline(True)
             page.reload()
