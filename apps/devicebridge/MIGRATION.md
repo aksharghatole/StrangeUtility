@@ -11,3 +11,6 @@ Node HTTP tests cover room lifecycle, signaling authorization, QR and ZIP. Brows
 
 ## Retirement
 Do not archive or disable the original until validated parity, data handling, deployment and explicit user approval.
+
+## Signaling admission follow-up
+Add bounded per-process rate-limit storage, separate join/QR/event/signal request budgets, pre-read JSON size check, cross-origin browser fetch-metadata rejection, fixed-length constant-time token comparison, heartbeat backpressure and HTTP header/request timeouts. CI pending. Rate limits are socket-IP based and may be shared by reverse-proxy users; do not trust forwarded IP headers without a configured proxy boundary. SSE query tokens remain a logging risk; replace in a later compatible transport migration. No claim of end-to-end identity authentication or physical-network parity. Original Render service unchanged.

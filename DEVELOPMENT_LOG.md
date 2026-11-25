@@ -19,3 +19,6 @@ Blind browser run 45617315735 reached the offline stage (photo, CSV, assistance 
 
 ## 2026-11-25 — Backend resource safety
 Blind PR #9 merged after green browser, APK and portal checks (45617759146, 45617759159, 45617759253). Daily Discovery PR #10 merged after green auth tests and portal checks (45617684928, 45617685026). Added Word-to-PDF request-size and upload-deadline guard before multipart parsing, one active request per worker, cleanup on response failure, subprocess group termination and non-root Docker user. New regression tests and container smoke checks proposed; no new deployment or original service changes. CI pending.
+
+## 2026-11-25 — DeviceBridge admission and portal improvements
+Word-to-PDF PR #11 merged after CI 45618215910 and 45618215775; verified non-root container conversion. Blind main APK/browser and Daily Discovery main security checks passed. Added DeviceBridge bounded rate-limit storage, endpoint budgets, token comparison, header/request timeouts, heartbeat backpressure and cross-origin fetch guards; added regression tests. Added APK artifact workflow link, clearer launch notes and keyboard skip link to portal. CI pending. Query-token exposure, physical devices and backend cutover not yet resolved. Original services unchanged.
