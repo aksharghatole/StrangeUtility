@@ -1,0 +1,5 @@
+# TableDelta 0.1 — reconciliation preview
+
+Compare two UTF-8 CSV/TSV snapshots by exact or optionally normalized composite keys. Inspect added, removed and changed records and separate schema differences. Duplicate keys on either side block comparison of that key on both sides; blank keys are excluded and reported. Exact JSON report and formula-risk-reduced CSV are available. CSV escaping does not guarantee safe spreadsheet behavior; use JSON for unmodified values. No file uploads, network calls, account or persistent storage.
+
+Limits: 3 MiB input per file, 10,000 data rows, 80 columns; strict consistent width and unique nonblank headers. Non-key values are always compared as strings, including whitespace, and column changes are separate from common-field changes. Record numbers refer to logical CSV records, not physical lines. No XLSX or automatic encoding detection. Run a static server from repo root and open /apps/tabledelta/. Tests: node --test tests/tabledelta.test.mjs. Browser verification pending. No claim of financial audit correctness.

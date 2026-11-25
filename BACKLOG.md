@@ -36,3 +36,6 @@
 - Blind release published and verified in 45620567477; direct portal links proposed. No need to dispatch again. Physical-device checks and persistent signing still open.
 - DeviceBridge #15 merged after successful server/browser CI 45620451671 and portal CI 45620451695; production service still original.
 - Backend cutover is blocked on approved migration settings, real hardware/network checks, security/licence review and quota verification. Follow docs/backend-cutover.md; no existing service changes or duplicate resources.
+
+- PR #16 merged after backend and portal checks; new main deployment verification pending.
+- TableDelta 0.1: implement strict CSV/TSV composite-key reconciliation, conflict exclusion, schema changes, safe rendering and export. First CI pending; then offline shell, larger dataset profiling, keyboard/mobile checks. One active new app. Backend cutover blockers remain documented; no source changes.

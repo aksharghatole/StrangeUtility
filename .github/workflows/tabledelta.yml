@@ -1,0 +1,32 @@
+name: TableDelta browser integration
+on:
+  pull_request:
+    paths:
+      - 'apps/tabledelta/**'
+      - 'tests/tabledelta.test.mjs'
+      - '.github/workflows/tabledelta.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/tabledelta/**'
+      - 'tests/tabledelta.test.mjs'
+      - '.github/workflows/tabledelta.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/tabledelta.test.mjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python apps/tabledelta/tests/browser_smoke.py
