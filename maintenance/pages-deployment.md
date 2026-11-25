@@ -1,3 +1,3 @@
 # Pages deployment repair
 
-2026-11-25: main run 45585224346 verified successfully but deployment failed; retry found two artifacts named github-pages. Use a unique matching artifact name for upload and deployment on each run attempt. This change is identical to the Pages portion of Blind PR #2 and is isolated so the portal can deploy without waiting for Android. Verify main deployment after merge. No live deployment yet.
+2026-11-25: PR #3 merged after CI. Main run 45611686826 uploaded unique artifact github-pages-1 (ID 15019933844) successfully, but deploy could not find metadata immediately. Later API GET /actions/runs/45611686826/artifacts returned exactly one unexpired matching artifact. Add bounded metadata polling via gh API, explicit actions:read, then deploy only when exactly one matching artifact is visible. No change to Pages settings or hosting. Main deployment remains unverified.
