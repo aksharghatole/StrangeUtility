@@ -37,3 +37,6 @@ Manual Android workflow 45620567477 passed build/signature and release publicati
 
 ## 2026-11-25 — First new utility: TableDelta
 Merged PR #16 after CI 45621246788, 45621246467 and 45621246443. DeviceBridge main CI 45621121463 and Pages 45621121460 passed. Researched CSV diff alternatives, RFC 4180 and OWASP spreadsheet formula risk; selected a bounded local-first composite-key reconciliation tool. Implemented strict CSV/TSV parser, duplicate/blank key conflict reports, schema differences, searchable paginated records, JSON and spreadsheet-oriented CSV export, responsive UI and unit/browser test workflows. Registry and Pages staging updated; CI pending. No new service or costs. Remaining original-app migration blockers remain in docs/backend-cutover.md.
+
+## 2026-11-25 — TableDelta offline shell
+PR #17 merged at 1796c0a; PR checks 45621926701 and 45621927019 passed. Main browser 45626519582 and Pages verify/package/deploy 45626519598 passed. No open PRs/issues at start. Add exact-URL static-only app-scoped service worker, readiness status, offline reload/export regression and staging checks. No input persistence, no backend changes. New CI pending; physical devices and backend cutover gates unchanged.

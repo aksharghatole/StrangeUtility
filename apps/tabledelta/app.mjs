@@ -18,3 +18,11 @@ for(const id of ['filter','search'])$(id).addEventListener('input',()=>{page=0;r
 function download(data,type,name){const url=URL.createObjectURL(new Blob([data],{type}));const a=make('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}
 $('json').onclick=()=>{if(report)download(JSON.stringify(report,null,2),'application/json','tabledelta-report.json')};$('csv').onclick=()=>{if(report)download(exportCSV(report),'text/csv;charset=utf-8','tabledelta-report.csv')};
 for(const id of ['keys','trim','case'])$(id).addEventListener('change',()=>{report=null;$('results').hidden=true;status('Matching options changed. Compare again.')});
+
+// Cache only the public app shell; never input data or generated reports.
+if(isSecureContext && 'serviceWorker' in navigator){
+ const indicator=$('offline-status');
+ const ready=()=>{if(navigator.serviceWorker.controller)indicator.textContent='Offline shell ready; browser may evict it.';};
+ navigator.serviceWorker.addEventListener('controllerchange',ready);
+ navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(()=>navigator.serviceWorker.ready).then(ready).catch(()=>{indicator.textContent='Offline shell unavailable.';});
+}else $('offline-status').textContent='Offline shell requires a secure browser context.';

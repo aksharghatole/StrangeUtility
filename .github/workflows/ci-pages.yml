@@ -35,7 +35,7 @@ jobs:
           cp apps/paperwork/index.html apps/paperwork/sw.js apps/paperwork/offline-assets.js site/apps/paperwork/
           cp -R apps/paperwork/vendor site/apps/paperwork/
           cp apps/blind/index.html apps/blind/sw.js apps/blind/manifest.webmanifest apps/blind/icon.svg site/apps/blind/
-          cp apps/tabledelta/index.html apps/tabledelta/style.css apps/tabledelta/app.mjs apps/tabledelta/core.mjs site/apps/tabledelta/
+          cp apps/tabledelta/index.html apps/tabledelta/style.css apps/tabledelta/app.mjs apps/tabledelta/core.mjs apps/tabledelta/sw.js site/apps/tabledelta/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name

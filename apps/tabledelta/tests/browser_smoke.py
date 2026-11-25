@@ -50,6 +50,27 @@ def main():
             page.locator("#inspect").click()
             page.locator("#compare").click()
             expect(page.locator("#metrics .metric b")).to_have_text(["0","0","1","0","0"])
+            # Verify a controlled offline reload and fresh local comparison.
+            page.wait_for_function("navigator.serviceWorker.controller !== null")
+            expect(page.locator("#offline-status")).to_contain_text("Offline shell ready")
+            assert page.evaluate("""async () => {
+                const reg = await navigator.serviceWorker.ready;
+                const cache = await caches.open('strangeutility-tabledelta-shell-v2');
+                const keys = await cache.keys();
+                return reg.scope.endsWith('/apps/tabledelta/') && keys.length === 5 &&
+                    keys.every(k => k.url.startsWith(reg.scope));
+            }""")
+            page.context.set_offline(True)
+            page.reload()
+            expect(page.locator("#before-text")).to_have_value("")
+            page.locator("#sample").click()
+            page.locator("#compare").click()
+            expect(page.locator("#metrics .metric b")).to_have_text(["1","1","1","1","1"])
+            with page.expect_download() as d:
+                page.locator("#json").click()
+            dest = Path(temp) / "offline.json"
+            d.value.save_as(str(dest))
+            assert json.loads(dest.read_text())["counts"]["changed"] == 1
             browser.close()
     finally:
         server.shutdown()
