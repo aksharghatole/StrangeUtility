@@ -14,8 +14,10 @@
     "name": "Blind",
     "category": "Accessibility",
     "description": "Camera and photo colour assistant.",
-    "status": "queued",
-    "source": "https://github.com/aksharghatole/Blind"
+    "status": "imported",
+    "source": "https://github.com/aksharghatole/Blind",
+    "path": "apps/blind/",
+    "sourceCommit": "4485646b40ef039e7c2068ca2d3f5c674b85ae1f"
   },
   {
     "id": "word-to-pdf",

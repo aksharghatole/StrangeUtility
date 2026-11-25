@@ -1,0 +1,15 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'com.colourlens.blind'
+ compileSdk 35
+ defaultConfig { applicationId 'com.colourlens.blind'; minSdk 23; targetSdk 35; versionCode 12; versionName '1.2.0' }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+ sourceSets { main.assets.srcDir(layout.buildDirectory.dir('generated/webAssets')) }
+}
+dependencies { implementation 'androidx.webkit:webkit:1.12.1' }
+def syncWebAssets = tasks.register('syncWebAssets', Sync) {
+ from rootProject.projectDir.parentFile
+ include 'index.html', 'icon.svg', 'manifest.webmanifest'
+ into layout.buildDirectory.dir('generated/webAssets')
+}
+tasks.named('preBuild').configure { dependsOn syncWebAssets }
