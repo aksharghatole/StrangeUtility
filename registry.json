@@ -70,6 +70,6 @@
     "status": "testing",
     "path": "apps/tabledelta/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/tabledelta",
-    "notes": "Version 0.1 browser tests and Pages deployment passed. Version 0.2 offline shell proposed; offline regression pending. No persistent input storage."
+    "notes": "Version 0.2 browser/offline tests and Pages deployment passed. No persistent input storage. Export memory optimization proposed; physical-device checks pending."
   }
 ]

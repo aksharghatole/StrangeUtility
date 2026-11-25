@@ -1,4 +1,4 @@
-const CACHE='strangeutility-tabledelta-shell-v2';
+const CACHE='strangeutility-tabledelta-shell-v3';
 const ROOT=new URL('./',self.location.href);
 const URLS=['./','index.html','style.css','app.mjs','core.mjs'].map(p=>new URL(p,ROOT).href);
 self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(URLS.map(url=>new Request(url,{cache:'reload'})));})()));

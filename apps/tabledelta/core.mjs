@@ -53,15 +53,18 @@ export function reconcile(before,after,keys,{trim=false,ignoreCase=false}={}){
 // Spreadsheet-targeted CSV is deliberately transformed; JSON preserves exact values.
 export function csvCell(value){let s=String(value??'');if(/^[\s\uFEFF]*[=+\-@\uFF1D\uFF0B\uFF0D\uFF20]|^[\t\r\n]/u.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
 export function exportCSV(report){
- const rows=[['Status','Key (JSON)','Column','Before','After']];
+ const chunks=['\uFEFF'+['Status','Key (JSON)','Column','Before','After'].map(csvCell).join(',')+'\r\n'];
+ let batch=[];
+ function emit(row){batch.push(row.map(csvCell).join(',')+'\r\n');if(batch.length===256){chunks.push(batch.join(''));batch=[];}}
  for(const change of report.changes){
   const k=JSON.stringify(change.key);
-  if(change.status==='changed'){for(const c of change.cells)rows.push([change.status,k,c.column,c.before,c.after]);}
+  if(change.status==='changed'){for(const c of change.cells)emit([change.status,k,c.column,c.before,c.after]);}
   else{const source=change.status==='added'?report.headers.after:report.headers.before;
-   for(let i=0;i<source.length;i++)rows.push([change.status,k,source[i],change.before?.[i]??'',change.after?.[i]??'']);}
+   for(let i=0;i<source.length;i++)emit([change.status,k,source[i],change.before?.[i]??'',change.after?.[i]??'']);}
  }
- for(const c of report.conflicts)rows.push(['conflict',JSON.stringify(c.key),c.side,c.reason,'Records '+c.rows.join(', ')]);
- for(const column of report.schema.added)rows.push(['column added','',column,'','']);
- for(const column of report.schema.removed)rows.push(['column removed','',column,'','']);
- return '\uFEFF'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n')+'\r\n';
+ for(const c of report.conflicts)emit(['conflict',JSON.stringify(c.key),c.side,c.reason,'Records '+c.rows.join(', ')]);
+ for(const column of report.schema.added)emit(['column added','',column,'','']);
+ for(const column of report.schema.removed)emit(['column removed','',column,'','']);
+ if(batch.length)chunks.push(batch.join(''));
+ return chunks.join('');
 }

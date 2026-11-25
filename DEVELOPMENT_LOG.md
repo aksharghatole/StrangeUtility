@@ -40,3 +40,6 @@ Merged PR #16 after CI 45621246788, 45621246467 and 45621246443. DeviceBridge ma
 
 ## 2026-11-25 — TableDelta offline shell
 PR #17 merged at 1796c0a; PR checks 45621926701 and 45621927019 passed. Main browser 45626519582 and Pages verify/package/deploy 45626519598 passed. No open PRs/issues at start. Add exact-URL static-only app-scoped service worker, readiness status, offline reload/export regression and staging checks. No input persistence, no backend changes. New CI pending; physical devices and backend cutover gates unchanged.
+
+## 2026-11-25 — Deployment recovered and bounded CSV export allocation
+PR #18 merged; main ff843f6 browser/offline run 45648681775 passed. Pages run 45648681804 attempt 2 succeeded. No open PRs/issues at inspection. Replace per-field export row arrays with batches of encoded CSV lines, preserving output format; add maximum-row and input-limit regressions, bump offline cache version, reconcile registry status. New CI pending; no measured memory or speed claim. Original repos and services unchanged.
