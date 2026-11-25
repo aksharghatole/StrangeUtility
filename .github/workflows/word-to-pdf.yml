@@ -1,0 +1,32 @@
+name: Word-to-PDF integration
+on:
+  pull_request:
+    paths:
+      - 'apps/word-to-pdf/**'
+      - '.github/workflows/word-to-pdf.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/word-to-pdf/**'
+      - '.github/workflows/word-to-pdf.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conversion:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/word-to-pdf
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-writer fonts-dejavu fonts-liberation
+      - run: python -m pip install -r backend/requirements-dev.txt
+      - run: python -m pytest -v
+      - run: node --check frontend/app.js
