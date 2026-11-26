@@ -65,3 +65,6 @@ CSV consolidation, normalized column alignment, key deduplication, undo, preview
 
 ## DataForge 0.2 — 2026-11-26
 PR #28 merged; PR CI 45793368357 passed. Added non-destructive duplicate merge, missing-key retention and conflict CSV report on feature/dataforge-merge. New tests written; CI and deployment pending. Next XLSX import and explicit column mapping.
+
+## DataForge 0.3 — 2026-11-26
+PR #29 merged with CI 45793633089 green. Added ExcelJS 4.4.0 build-time browser bundle, XLSX import of visible sheets, cached formula values and text-only XLSX export. Adapter test added; real workbook roundtrip and browser tests pending. Limits remain 50 files/20 MB; no paid services. Next: bounded decompression, worker processing and explicit mapping.
