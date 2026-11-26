@@ -101,5 +101,15 @@
     "path": "apps/dataforge/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/dataforge",
     "notes": "0.1 CSV-only preview; XLSX, joins and workflows pending; CI and browser verification pending."
+  },
+  {
+    "id": "cutledger",
+    "name": "CutLedger",
+    "category": "Engineering",
+    "description": "Plan stock cutting with kerf, offcuts and cost estimates.",
+    "status": "testing",
+    "path": "apps/cutledger/",
+    "notes": "0.1 heuristic, integer millimetres, identical stock lengths; CI and browser verification pending.",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/cutledger"
   }
 ]

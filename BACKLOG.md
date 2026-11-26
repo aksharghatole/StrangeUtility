@@ -80,3 +80,9 @@ PR #32 merged with CI 45794624557 green. Added trim/collapse whitespace, case co
 
 ## DataForge 0.7 — 2026-11-26
 PR #34 merged with CI 45800201695 green. Added left/inner/anti joins against one CSV/XLSX lookup, duplicate-key rejection, optional case-insensitive matching, collision-safe headers, match counts and undo. Tests written; CI/browser pending. Next real workbook browser roundtrip and reusable workflows.
+
+## CutLedger 0.1 — 2026-11-26
+PR #35 merged; PR CI 45800436472 passed; main deployment unverified. New distinct engineering utility on feature/cutledger: best-fit decreasing stock cutting, kerf, cost, diagrams and text export. Heuristic assessment (not market research): usefulness 9, feasibility 9, demand 7, privacy/cost 10, uniqueness 6, maintainability 9; weighted 8.55/10. Core tests written; CI/browser pending. Next verify and add mixed stock lengths if useful. No dependencies or paid services.
+
+## 2026-11-26 — CutLedger 0.2
+PR #36 https://github.com/aksharghatole/StrangeUtility/pull/36: CI 45823179114 failed registry source field (44/45 tests passed); fixed missing source without weakening validation. Added finite reusable offcut inventory, purchase-only costing, per-stock diagrams and conservation tests. New CI pending; no deployment verified. Heuristic, no optimality guarantee; next browser and print checks. Other open app PRs #24 and #33 remain independent. No paid dependencies or services.

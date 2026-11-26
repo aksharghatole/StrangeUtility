@@ -1,0 +1,11 @@
+// Integer millimetres; conservative kerf per piece, including final cut.
+export function planCuts(stock,kerf,requests){
+ if(!Number.isSafeInteger(stock)||stock<1||stock>1000000||!Number.isSafeInteger(kerf)||kerf<0||kerf>=stock)throw Error('Invalid stock length or kerf');
+ const pieces=[];for(const {length,count} of requests){if(!Number.isSafeInteger(length)||length<1||length+kerf>stock||!Number.isSafeInteger(count)||count<1||pieces.length+count>2000)throw Error('Invalid piece or more than 2,000 pieces');for(let i=0;i<count;i++)pieces.push(length)}
+ if(!pieces.length)throw Error('Add at least one piece');pieces.sort((a,b)=>b-a);const bars=[];
+ for(const length of pieces){const need=length+kerf;let best=null;for(const bar of bars)if(bar.remaining>=need&&(!best||bar.remaining<best.remaining))best=bar;if(!best){best={remaining:stock,pieces:[]};bars.push(best)}best.pieces.push(length);best.remaining-=need}
+ const material=pieces.reduce((a,b)=>a+b,0),loss=pieces.length*kerf,total=bars.length*stock;return {bars,material,loss,total,waste:total-material-loss};
+}
+
+// Consume finite reusable offcuts before purchasing identical new stock.
+export function planWithOffcuts(stock,kerf,requests,offcuts=[]){const baseline=planCuts(stock,kerf,requests);if(!Array.isArray(offcuts)||offcuts.length>2000||offcuts.some(n=>!Number.isSafeInteger(n)||n<1||n>1000000))throw Error('Invalid offcut inventory');const pieces=baseline.bars.flatMap(b=>b.pieces).sort((a,b)=>b-a),available=offcuts.map(length=>({length,remaining:length,pieces:[],reused:true})),purchased=[];for(const length of pieces){const need=length+kerf;let best=null;for(const b of available)if(b.remaining>=need&&(!best||b.remaining<best.remaining))best=b;if(!best){for(const b of purchased)if(b.remaining>=need&&(!best||b.remaining<best.remaining))best=b;if(!best){best={length:stock,remaining:stock,pieces:[],reused:false};purchased.push(best)}}best.pieces.push(length);best.remaining-=need}const bars=[...available.filter(b=>b.pieces.length),...purchased],total=bars.reduce((n,b)=>n+b.length,0);return {bars,total,material:baseline.material,loss:baseline.loss,waste:total-baseline.material-baseline.loss,purchased:purchased.length,reused:bars.length-purchased.length,unusedOffcuts:available.filter(b=>!b.pieces.length).map(b=>b.length)}}
