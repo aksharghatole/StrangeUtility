@@ -76,3 +76,6 @@ PR #30 merged, CI 45793883339 passed. Added cancellable worker import, progress,
 
 ## DataForge 0.5 — 2026-11-26
 PR #31 merged, CI 45794193194 green. Added post-import column rename/coalesce/drop, conflict audit, undo and missing/distinct profiling. Unit tests written; CI/browser pending. Next real workbook browser roundtrip and stress tests, worksheet selection, bulk transformations.
+
+## DataForge 0.6 — 2026-11-26
+PR #32 merged with CI 45794624557 green. Added trim/collapse whitespace, case conversion, literal replacement, fill blanks, row filtering and first-delimiter split with confirmation and one-step undo. Tests written; CI/browser pending. Next workbook browser roundtrip, dataset joins and reusable workflows.
