@@ -121,5 +121,15 @@
     "path": "apps/contrastfield/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/contrastfield",
     "notes": "0.1 preview; opaque sRGB only, unit and browser verification pending."
+  },
+  {
+    "id": "subtitlebench",
+    "name": "SubtitleBench",
+    "category": "Audio",
+    "description": "Convert and retime SRT and WebVTT subtitles and audit overlaps.",
+    "status": "testing",
+    "path": "apps/subtitlebench/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/subtitlebench",
+    "notes": "0.1 plain cues only; positioning and identifiers not preserved; CI/browser pending."
   }
 ]
