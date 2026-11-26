@@ -46,6 +46,8 @@ jobs:
           cp apps/cutledger/index.html apps/cutledger/core.mjs site/apps/cutledger/
           mkdir -p site/apps/contrastfield
           cp apps/contrastfield/index.html apps/contrastfield/core.mjs site/apps/contrastfield/
+          mkdir -p site/apps/subtitlebench
+          cp apps/subtitlebench/index.html apps/subtitlebench/core.mjs site/apps/subtitlebench/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name
