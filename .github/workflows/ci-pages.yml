@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python apps/paperwork/prepare_vendor.py
+      - run: npm install --prefix /tmp/dataforge-vendor --ignore-scripts --no-audit --no-fund exceljs@4.4.0
       - name: Stage static application directory
         run: |
           mkdir -p site/apps/paperwork site/apps/blind site/apps/tabledelta site/apps/wavecut site/apps/slotweave site/apps/dataforge site/packages/ui site/portal
@@ -39,6 +40,8 @@ jobs:
           cp apps/wavecut/index.html apps/wavecut/style.css apps/wavecut/app.mjs apps/wavecut/core.mjs site/apps/wavecut/
           cp apps/slotweave/index.html apps/slotweave/core.mjs site/apps/slotweave/
           cp apps/dataforge/index.html apps/dataforge/core.mjs site/apps/dataforge/
+          cp apps/dataforge/xlsx.mjs site/apps/dataforge/
+          cp /tmp/dataforge-vendor/node_modules/exceljs/dist/exceljs.min.js /tmp/dataforge-vendor/node_modules/exceljs/LICENSE site/apps/dataforge/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name
