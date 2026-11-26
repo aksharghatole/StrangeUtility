@@ -79,3 +79,6 @@ PR #31 merged, CI 45794193194 green. Added post-import column rename/coalesce/dr
 
 ## DataForge 0.6 — 2026-11-26
 PR #32 merged with CI 45794624557 green. Added trim/collapse whitespace, case conversion, literal replacement, fill blanks, row filtering and first-delimiter split with confirmation and one-step undo. Tests written; CI/browser pending. Next workbook browser roundtrip, dataset joins and reusable workflows.
+
+## DataForge 0.7 — 2026-11-26
+PR #34 merged with CI 45800201695 green. Added left/inner/anti joins against one CSV/XLSX lookup, duplicate-key rejection, optional case-insensitive matching, collision-safe headers, match counts and undo. Tests written; CI/browser pending. Next real workbook browser roundtrip and reusable workflows.
