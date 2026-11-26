@@ -92,3 +92,6 @@ CutLedger PR #36 merged at cc36f68 after verify/package 45832401047 passed; depl
 
 ## SubtitleBench 0.1 — 2026-11-26
 Continued existing feature/subtitlebench core and tests with working import/paste, timing offset and scale, overlap/readability audit, original reset and SRT/VTT downloads. ContrastField #37 merged, PR CI 45841972663 passed; main merge workflow not returned. #24 and #33 remain failed/conflicted. SubtitleBench CI/browser/deployment pending. Reference specification https://www.w3.org/TR/webvtt1/ (not independently retrieved this run). Heuristic scores 8/9/7/10/7/9, weighted 8.35/10. No paid resources. Next verify browser roundtrip and deployment; cue positioning and metadata preservation deferred.
+
+## SubtitleBench 0.2 — 2026-11-27
+PR #38 merged, CI 45862634196 passed. New branch feature/subtitlebench-preview adds local video playback, literal active caption display, cue seeking and two-point drift correction. Core regression tests added; CI/browser/deployment pending. #24 and #33 remain failed/conflicted. Browser codec support varies; no video transcoding. Next browser verification and release, then rotate category. No paid resources.

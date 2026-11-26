@@ -5,3 +5,6 @@ export function retime(cues,offset,scale=1){if(!Number.isFinite(offset)||!Number
 export function audit(cues){let max=-1;return [...cues].sort((a,b)=>a.start-b.start).map(c=>{const overlap=c.start<max;max=Math.max(max,c.end);return {...c,overlap,short:c.end-c.start<500,cps:[...c.text.replace(/\n/g,'')].length/((c.end-c.start)/1000)}})}
 export function formatTime(n,sep='.'){return [Math.floor(n/3600000),Math.floor(n/60000)%60,Math.floor(n/1000)%60].map(v=>String(v).padStart(2,'0')).join(':')+sep+String(n%1000).padStart(3,'0')}
 export function serialize(cues,format){if(!['srt','vtt'].includes(format))throw Error('Invalid format');return (format==='vtt'?'WEBVTT\n\n':'')+cues.map((c,i)=>(format==='srt'?i+1+'\n':'')+formatTime(c.start,format==='srt'?',':'.')+' --> '+formatTime(c.end,format==='srt'?',':'.')+'\n'+c.text).join('\n\n')+'\n'}
+
+export function activeCues(cues,ms){return cues.filter(c=>c.start<=ms&&ms<c.end)}
+export function anchorTiming(a,b){if(![a.source,a.target,b.source,b.target].every(Number.isFinite)||b.source<=a.source||b.target<=a.target||a.source<0||a.target<0)throw Error('Anchors must be nonnegative and increasing');const scale=(b.target-a.target)/(b.source-a.source);return {scale,offset:a.target-a.source*scale}}
