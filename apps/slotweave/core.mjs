@@ -1,0 +1,4 @@
+// SlotWeave 0.1 — minute-resolution shared availability.
+export function parse(s){if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(s))throw Error('Use HH:MM (00:00–23:59)');const [h,m]=s.split(':').map(Number);return h*60+m}
+export function overlap(rows,duration){if(!Number.isInteger(duration)||duration<1||duration>1440)throw Error('Invalid duration');if(!Array.isArray(rows)||rows.length<1||rows.length>100)throw Error('Enter 1–100 people');let start=0,end=1440;for(const row of rows){const a=parse(row.start),b=parse(row.end);if(b<=a)throw Error('End must follow start; overnight windows are not supported');start=Math.max(start,a);end=Math.min(end,b)}return end-start>=duration?{start,end,minutes:end-start}:null}
+export function format(m){return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
