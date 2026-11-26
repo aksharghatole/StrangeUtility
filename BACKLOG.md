@@ -49,3 +49,5 @@
 - PR #19 merged at 84c3e4f after green corrected browser 45678078126 and portal 45678078259. Main deployment pending verification. Add keyboard focus transitions for matching, results, pagination and clearing; browser regression pending. Physical device and backend cutover blockers unchanged.
 
 - PR #20 merged; main browser 45698250883 and Pages verify/package/deploy 45698250643 passed. Fix stale comparisons during asynchronous file reads and reset delimiter on CSV import; regression pending. Profile large datasets next. Backend cutover gates unchanged.
+
+- PR #21 merged at 4ab5f70; browser workflow 45716280922 and Pages workflow 45716280957 (verify, package, deploy) completed successfully. No open PRs or issues at inspection on 2026-11-26. Maximum-size performance profiling, physical-device checks and backend cutover gates remain outstanding.
