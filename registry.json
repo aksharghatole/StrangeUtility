@@ -130,6 +130,6 @@
     "status": "testing",
     "path": "apps/subtitlebench/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/subtitlebench",
-    "notes": "0.1 plain cues only; positioning and identifiers not preserved; CI/browser pending."
+    "notes": "0.2 testing: local video preview, cue seeking and two-point alignment; plain cues only; new CI/browser pending."
   }
 ]
