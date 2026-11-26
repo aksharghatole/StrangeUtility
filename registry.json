@@ -71,5 +71,15 @@
     "path": "apps/tabledelta/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/tabledelta",
     "notes": "Version 0.3 main browser, keyboard and Pages deployment passed. Input-read race correction merged; browser and Pages workflows passed. Physical-device and maximum-size performance profiling remain outstanding."
+  },
+  {
+    "id": "wavecut",
+    "name": "WaveCut",
+    "category": "Audio",
+    "description": "Trim WAV recordings, find quiet edges, add fades and normalize peaks privately.",
+    "status": "imported",
+    "path": "apps/wavecut/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/wavecut",
+    "notes": "New preview: mono/stereo PCM16 WAV only; local processing, waveform, playback and WAV export. Browser verification pending."
   }
 ]

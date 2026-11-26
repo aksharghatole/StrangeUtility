@@ -55,3 +55,6 @@ Merged [PR #19](https://github.com/aksharghatole/StrangeUtility/pull/19) after c
 
 ## 2026-11-26 — Verification reconciliation
 PR #21 merged at 4ab5f70; browser workflow 45716280922 and Pages workflow 45716280957 (verify, package, deploy) completed successfully. No open PRs or issues at inspection on 2026-11-26. Maximum-size performance profiling, physical-device checks and backend cutover gates remain outstanding.
+
+## 2026-11-26 — Manual run: new application WaveCut
+Merged PR #22 after portal CI 45757155334 passed; previous main Pages/browser CI 45716280957 and 45716280922 passed. Prioritized new development per user direction. Built a bounded original PCM16 WAV editor with strict RIFF parsing, non-destructive sample-rounded trim, quiet-edge detection, waveform, linear fades, peak normalization, browser playback and download. Added six Node tests, mobile upload/edit/export smoke test with independent Python WAV verification, registry, research note and Pages staging. New CI and deployment pending. No backend, dependencies, uploads or additional expenditure. Existing source repos and services unchanged.
