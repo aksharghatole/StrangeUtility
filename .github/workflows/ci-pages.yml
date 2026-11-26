@@ -28,7 +28,7 @@ jobs:
       - run: python apps/paperwork/prepare_vendor.py
       - name: Stage static application directory
         run: |
-          mkdir -p site/apps/paperwork site/apps/blind site/apps/tabledelta site/apps/wavecut site/apps/slotweave site/packages/ui site/portal
+          mkdir -p site/apps/paperwork site/apps/blind site/apps/tabledelta site/apps/wavecut site/apps/slotweave site/apps/dataforge site/packages/ui site/portal
           cp index.html registry.json site/
           cp packages/ui/portal.css site/packages/ui/
           cp portal/portal.js site/portal/
@@ -38,6 +38,7 @@ jobs:
           cp apps/tabledelta/index.html apps/tabledelta/style.css apps/tabledelta/app.mjs apps/tabledelta/core.mjs apps/tabledelta/sw.js site/apps/tabledelta/
           cp apps/wavecut/index.html apps/wavecut/style.css apps/wavecut/app.mjs apps/wavecut/core.mjs site/apps/wavecut/
           cp apps/slotweave/index.html apps/slotweave/core.mjs site/apps/slotweave/
+          cp apps/dataforge/index.html apps/dataforge/core.mjs site/apps/dataforge/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name

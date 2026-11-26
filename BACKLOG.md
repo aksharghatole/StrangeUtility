@@ -59,3 +59,6 @@
 
 ## 2026-11-26 — SlotWeave 0.1
 New local-first shared availability calculator on feature/slotweave; core, UI, text export and unit tests committed. CI, Pages staging and browser checks pending. Same-day single interval per person, no timezone conversion or persistence. Next: verify staging, keyboard/mobile and multi-window support. PocketScan PR #24 remains independent. No new dependencies or services.
+
+## DataForge 0.1 — 2026-11-26
+CSV consolidation, normalized column alignment, key deduplication, undo, preview and formula-safe export implemented on feature/dataforge. Tests written; CI and deployment pending. Next: XLSX support, worker processing, explicit mapping and browser tests. No paid services. SlotWeave PR #27 merged with green PR checks; production deployment not independently verified.
