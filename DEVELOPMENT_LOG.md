@@ -58,3 +58,6 @@ PR #21 merged at 4ab5f70; browser workflow 45716280922 and Pages workflow 457162
 
 ## 2026-11-26 — Manual run: new application WaveCut
 Merged PR #22 after portal CI 45757155334 passed; previous main Pages/browser CI 45716280957 and 45716280922 passed. Prioritized new development per user direction. Built a bounded original PCM16 WAV editor with strict RIFF parsing, non-destructive sample-rounded trim, quiet-edge detection, waveform, linear fades, peak normalization, browser playback and download. Added six Node tests, mobile upload/edit/export smoke test with independent Python WAV verification, registry, research note and Pages staging. New CI and deployment pending. No backend, dependencies, uploads or additional expenditure. Existing source repos and services unchanged.
+
+## 2026-11-26 — SlotWeave 0.1
+New local-first shared availability calculator on feature/slotweave; core, UI, text export and unit tests committed. CI, Pages staging and browser checks pending. Same-day single interval per person, no timezone conversion or persistence. Next: verify staging, keyboard/mobile and multi-window support. PocketScan PR #24 remains independent. No new dependencies or services.

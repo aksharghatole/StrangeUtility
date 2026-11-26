@@ -81,5 +81,15 @@
     "path": "apps/wavecut/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/wavecut",
     "notes": "New preview: mono/stereo PCM16 WAV only; local processing, waveform, playback and WAV export. Browser verification pending."
+  },
+  {
+    "id": "slotweave",
+    "name": "SlotWeave",
+    "category": "Productivity",
+    "description": "Find a common meeting window without sharing calendars.",
+    "status": "imported",
+    "path": "apps/slotweave/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/slotweave",
+    "notes": "0.1 preview; same-day same-time-zone intervals only; text export; CI and deployment pending."
   }
 ]

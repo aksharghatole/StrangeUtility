@@ -56,3 +56,6 @@
 - Source consolidation complete; outstanding old-app improvements and backend cutover gates are nonblocking unless critical. Allocate at least 80% of rolling development runs to new applications; no successive maintenance-only runs absent critical incidents. Briefly check/merge green PRs, then implement a useful new app or finish a recent one.
 - PR #22 merged after portal CI 45757155334; prior main Pages 45716280957 and TableDelta browser 45716280922 passed.
 - WaveCut 0.1: new audio editor, strict PCM16 WAV parsing, trim, quiet-edge detection, waveform, fades, peak normalization, playback and export. Unit/browser checks pending. Follow-up: offline shell, large-file performance and format compatibility; then rotate to a distinct new utility.
+
+## 2026-11-26 — SlotWeave 0.1
+New local-first shared availability calculator on feature/slotweave; core, UI, text export and unit tests committed. CI, Pages staging and browser checks pending. Same-day single interval per person, no timezone conversion or persistence. Next: verify staging, keyboard/mobile and multi-window support. PocketScan PR #24 remains independent. No new dependencies or services.
