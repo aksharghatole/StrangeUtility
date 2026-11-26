@@ -109,6 +109,7 @@
     "description": "Plan stock cutting with kerf, offcuts and cost estimates.",
     "status": "testing",
     "path": "apps/cutledger/",
-    "notes": "0.1 heuristic, integer millimetres, identical stock lengths; CI and browser verification pending."
+    "notes": "0.1 heuristic, integer millimetres, identical stock lengths; CI and browser verification pending.",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/cutledger"
   }
 ]
