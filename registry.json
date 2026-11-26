@@ -111,5 +111,15 @@
     "path": "apps/cutledger/",
     "notes": "0.1 heuristic, integer millimetres, identical stock lengths; CI and browser verification pending.",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/cutledger"
+  },
+  {
+    "id": "contrastfield",
+    "name": "ContrastField",
+    "category": "Accessibility",
+    "description": "Audit palette-wide text contrast and suggest passing foreground colors.",
+    "status": "testing",
+    "path": "apps/contrastfield/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/contrastfield",
+    "notes": "0.1 preview; opaque sRGB only, unit and browser verification pending."
   }
 ]
