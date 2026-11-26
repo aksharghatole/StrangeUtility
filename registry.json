@@ -131,5 +131,15 @@
     "path": "apps/subtitlebench/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/subtitlebench",
     "notes": "0.2 testing: local video preview, cue seeking and two-point alignment; plain cues only; new CI/browser pending."
+  },
+  {
+    "id": "filemanifest",
+    "name": "FileManifest",
+    "category": "Privacy",
+    "description": "Hash files locally and compare backup snapshots for missing, added or modified files.",
+    "status": "testing",
+    "path": "apps/filemanifest/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/filemanifest",
+    "notes": "0.1 preview; SHA-256, 64 MiB per file, 1000 files; unsigned manifests; CI/browser pending."
   }
 ]
