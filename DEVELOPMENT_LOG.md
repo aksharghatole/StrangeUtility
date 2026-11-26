@@ -64,3 +64,6 @@ New local-first shared availability calculator on feature/slotweave; core, UI, t
 
 ## DataForge 0.1 — 2026-11-26
 CSV consolidation, normalized column alignment, key deduplication, undo, preview and formula-safe export implemented on feature/dataforge. Tests written; CI and deployment pending. Next: XLSX support, worker processing, explicit mapping and browser tests. No paid services. SlotWeave PR #27 merged with green PR checks; production deployment not independently verified.
+
+## DataForge 0.2 — 2026-11-26
+PR #28 merged; PR CI 45793368357 passed. Added non-destructive duplicate merge, missing-key retention and conflict CSV report on feature/dataforge-merge. New tests written; CI and deployment pending. Next XLSX import and explicit column mapping.
