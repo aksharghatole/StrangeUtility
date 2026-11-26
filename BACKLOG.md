@@ -71,3 +71,6 @@ PR #29 merged with CI 45793633089 green. Added ExcelJS 4.4.0 build-time browser 
 
 ## DataForge 0.4 — 2026-11-26
 PR #30 merged, CI 45793883339 passed. Added cancellable worker import, progress, optional source columns, 250-file cap with unchanged 20 MB total, incremental output limits and ZIP metadata preflight. Metadata guard is not a complete decompression bound against forged ZIP metadata. Browser and stress tests pending. Next real workbook roundtrip, worker compatibility and mapping.
+
+## DataForge 0.5 — 2026-11-26
+PR #31 merged, CI 45794193194 green. Added post-import column rename/coalesce/drop, conflict audit, undo and missing/distinct profiling. Unit tests written; CI/browser pending. Next real workbook browser roundtrip and stress tests, worksheet selection, bulk transformations.
