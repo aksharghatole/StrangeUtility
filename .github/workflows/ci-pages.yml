@@ -44,6 +44,8 @@ jobs:
           cp /tmp/dataforge-vendor/node_modules/exceljs/dist/exceljs.min.js /tmp/dataforge-vendor/node_modules/exceljs/LICENSE site/apps/dataforge/
           mkdir -p site/apps/cutledger
           cp apps/cutledger/index.html apps/cutledger/core.mjs site/apps/cutledger/
+          mkdir -p site/apps/contrastfield
+          cp apps/contrastfield/index.html apps/contrastfield/core.mjs site/apps/contrastfield/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name

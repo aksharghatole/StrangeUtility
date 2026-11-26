@@ -1,0 +1,5 @@
+export function rgb(hex){if(!/^#[0-9a-f]{6}$/i.test(hex))throw Error('Use six-digit hex colors');return [1,3,5].map(i=>parseInt(hex.slice(i,i+2),16))}
+export function luminance(hex){return rgb(hex).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4}).reduce((s,x,i)=>s+x*[.2126,.7152,.0722][i],0)}
+export function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+export function matrix(colors){if(!Array.isArray(colors)||colors.length<2||colors.length>20)throw Error('Enter 2–20 colors');return colors.map(a=>colors.map(b=>contrast(a,b)))}
+export function repair(fg,bg,target=4.5){if(![3,4.5,7].includes(target))throw Error('Invalid target');if(contrast(fg,bg)>=target)return fg;const start=rgb(fg);let best=null;for(const end of [0,255])for(let i=1;i<=255;i++){const c='#'+start.map(v=>Math.round(v+(end-v)*i/255).toString(16).padStart(2,'0')).join('');if(contrast(c,bg)>=target){const d=rgb(c).reduce((n,v,j)=>n+(v-start[j])**2,0);if(!best||d<best.d)best={c,d};break}}return best?.c??null}
