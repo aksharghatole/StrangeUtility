@@ -70,3 +70,6 @@ PR #28 merged; PR CI 45793368357 passed. Added non-destructive duplicate merge, 
 
 ## DataForge 0.3 — 2026-11-26
 PR #29 merged with CI 45793633089 green. Added ExcelJS 4.4.0 build-time browser bundle, XLSX import of visible sheets, cached formula values and text-only XLSX export. Adapter test added; real workbook roundtrip and browser tests pending. Limits remain 50 files/20 MB; no paid services. Next: bounded decompression, worker processing and explicit mapping.
+
+## DataForge 0.4 — 2026-11-26
+PR #30 merged, CI 45793883339 passed. Added cancellable worker import, progress, optional source columns, 250-file cap with unchanged 20 MB total, incremental output limits and ZIP metadata preflight. Metadata guard is not a complete decompression bound against forged ZIP metadata. Browser and stress tests pending. Next real workbook roundtrip, worker compatibility and mapping.
