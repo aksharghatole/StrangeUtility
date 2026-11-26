@@ -31,5 +31,7 @@ for filename in ("index.html", "sw.js", "manifest.webmanifest", "icon.svg"):
     assert (root / "apps/blind" / filename).is_file(), filename
 for filename in ("index.html", "style.css", "app.mjs", "core.mjs", "sw.js"):
     assert (root / "apps/tabledelta" / filename).is_file(), filename
+for filename in ("index.html", "style.css", "app.mjs", "core.mjs"):
+    assert (root / "apps/wavecut" / filename).is_file(), filename
 assert not any(p.suffix in {".py", ".sqlite3", ".db", ".apk"} or p.name == ".env" for p in root.rglob("*") if p.is_file())
 print("Static staging validated.")

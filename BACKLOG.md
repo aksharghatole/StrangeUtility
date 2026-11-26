@@ -51,3 +51,8 @@
 - PR #20 merged; main browser 45698250883 and Pages verify/package/deploy 45698250643 passed. Fix stale comparisons during asynchronous file reads and reset delimiter on CSV import; regression pending. Profile large datasets next. Backend cutover gates unchanged.
 
 - PR #21 merged at 4ab5f70; browser workflow 45716280922 and Pages workflow 45716280957 (verify, package, deploy) completed successfully. No open PRs or issues at inspection on 2026-11-26. Maximum-size performance profiling, physical-device checks and backend cutover gates remain outstanding.
+
+## New-application priority (2026-11-26)
+- Source consolidation complete; outstanding old-app improvements and backend cutover gates are nonblocking unless critical. Allocate at least 80% of rolling development runs to new applications; no successive maintenance-only runs absent critical incidents. Briefly check/merge green PRs, then implement a useful new app or finish a recent one.
+- PR #22 merged after portal CI 45757155334; prior main Pages 45716280957 and TableDelta browser 45716280922 passed.
+- WaveCut 0.1: new audio editor, strict PCM16 WAV parsing, trim, quiet-edge detection, waveform, fades, peak normalization, playback and export. Unit/browser checks pending. Follow-up: offline shell, large-file performance and format compatibility; then rotate to a distinct new utility.
