@@ -1,1 +1,56 @@
-const list=document.querySelector('#apps'),search=document.querySelector('#search'),category=document.querySelector('#category'),result=document.querySelector('#result');let registry=[];const make=(tag,text,cls)=>{const el=document.createElement(tag);if(text)el.textContent=text;if(cls)el.className=cls;return el};function render(){const q=search.value.trim().toLowerCase();const matches=registry.filter(a=>(!category.value||a.category===category.value)&&[a.name,a.description,a.category,a.notes||''].join(' ').toLowerCase().includes(q));list.replaceChildren();result.textContent=matches.length+' application'+(matches.length===1?'':'s');for(const a of matches){const card=make('article','','card');card.append(make('span',a.category+' · '+(({imported:'Preview · verification pending',testing:'Automated tests passed; preview',beta:'Beta',stable:'Stable',maintained:'Maintained',queued:'Migration queued'}[a.status]||a.status)),'meta'),make('h3',a.name),make('p',a.description));if(a.notes)card.append(make('p',a.notes,'notes'));if(a.path&&a.status!=='queued'){const link=make('a','Open preview','launch');link.href=a.path;card.append(link)}if(a.existingUrl){const hosted=make('a','Open existing hosted app','launch');hosted.href=a.existingUrl;card.append(hosted)}if(a.androidRelease){const dl=make('a','Download Android APK (testing preview)','launch');dl.href=a.androidRelease.apk;card.append(dl);const details=make('a','Release details and signing limitations','secondary-link');details.href=a.androidRelease.url;card.append(details);const checksum=make('a','SHA-256 checksum','secondary-link');checksum.href=a.androidRelease.checksum;card.append(checksum)}if(a.apkWorkflow){const apk=make('a','Android APK build · Artifacts','secondary-link');apk.href=a.apkWorkflow;card.append(apk)}if(a.sourceCommit){const imported=make('a','Monorepo source and setup');imported.href='https://github.com/aksharghatole/StrangeUtility/tree/main/apps/'+a.id;card.append(imported)}const source=make('a',a.sourceCommit?'Original repository':'Source code');source.href=a.source;card.append(source);list.append(card)}if(!matches.length)list.append(make('p','No applications match your search.'))}try{const response=await fetch(new URL('../registry.json',import.meta.url));if(!response.ok)throw new Error('Registry unavailable');registry=await response.json();for(const c of [...new Set(registry.map(a=>a.category))].sort()){const option=make('option',c);option.value=c;category.append(option)}search.addEventListener('input',render);category.addEventListener('change',render);render()}catch(e){result.textContent='Could not load the application directory. Reload or check the server.'}
+export function launchLinks(registry) {
+  if (!Array.isArray(registry)) return [];
+
+  return registry.flatMap((app) => {
+    if (!app || typeof app.id !== 'string' || typeof app.name !== 'string' || app.status === 'queued') return [];
+
+    if (typeof app.path === 'string' && app.path === `apps/${app.id}/`) {
+      return [{ name: app.name, href: app.path }];
+    }
+
+    if (typeof app.existingUrl === 'string') {
+      try {
+        const url = new URL(app.existingUrl);
+        if (url.protocol === 'https:') return [{ name: app.name, href: url.href }];
+      } catch {
+        // Invalid or unsafe destinations are not app launch links.
+      }
+    }
+
+    return [];
+  });
+}
+
+async function renderPortal() {
+  const list = document.querySelector('#apps');
+  const message = document.querySelector('#message');
+
+  try {
+    const response = await fetch(new URL('../registry.json', import.meta.url));
+    if (!response.ok) throw new Error('Registry unavailable');
+
+    const links = launchLinks(await response.json());
+    const fragment = document.createDocumentFragment();
+    for (const app of links) {
+      const link = document.createElement('a');
+      link.className = 'launch-link';
+      link.href = app.href;
+      link.textContent = app.name;
+
+      const arrow = document.createElement('span');
+      arrow.className = 'arrow';
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = '↗';
+      link.append(arrow);
+      fragment.append(link);
+    }
+
+    if (links.length === 0) throw new Error('No app launch links are available.');
+    list.replaceChildren(fragment);
+  } catch {
+    message.hidden = false;
+    message.textContent = 'Could not load the app launch links. Reload the page or check the server.';
+  }
+}
+
+if (typeof document !== 'undefined') renderPortal();
