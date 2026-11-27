@@ -171,5 +171,15 @@
     "path": "apps/receiptsplit/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/receiptsplit",
     "notes": "0.1 preview: item assignments, deterministic integer rounding, proportional extras, JSON export. Browser and deployment verification pending."
+  },
+  {
+    "id": "unitspec",
+    "name": "UnitSpec",
+    "category": "Engineering",
+    "description": "Calculate signed assembly tolerance stacks and RSS estimates locally.",
+    "status": "testing",
+    "path": "apps/unitspec/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/unitspec",
+    "notes": "0.1; linear chains only, browser and CI pending."
   }
 ]
