@@ -105,6 +105,11 @@ Rebased the PrintScale preview onto current main after PocketScan landed. Added 
 ## PocketScan verification — 2026-11-27
 PocketScan PR #24 is being rebased onto current main. Its unit tests and vendor integrity preparation passed, while the browser smoke test failed because OCR returned an empty result for the printed-text fixture. OCR now dynamically imports the packaged ESM library on demand, then selects the packaged LSTM-only core; the browser test reports app-level failures immediately. Rerun offline OCR and PDF checks after CI. Keep the app preview-only until real OCR, offline reload, and export checks pass.
 
+## 2026-11-27 — ReceiptSplit 0.1
+WaveCut #44 merged at 64e8ebf after portal 46001648713 and browser 46001648703 succeeded. UnitSpec #43 portal 45970903956 passed but merge returned HTTP 405 conflict; reconcile shared files before retest. New ReceiptSplit: exact integer minor-unit allocation for shared items and proportional tax/tip, JSON export, five core tests. Compared flat equal splitting and item-based splitting conceptually; selected item-based for accuracy (heuristic usefulness/feasibility/demand/privacy/uniqueness/maintenance 9/9/7/10/7/9; weighted 8.65/10). No external demand study. No dependencies or hosting cost. Browser and deployment pending. Next: verify UI, add editable item rows, discounts and settlement workflow.
+
 - 2026-11-27: UnitSpec 0.1 signed asymmetric tolerance chain, RSS estimate and JSON export; core tests committed at c920843e63f8031283a32f529b35a78f3aec4132. CI/browser/deployment pending. Next: visual and keyboard verification. Method: https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir6524.pdf
 
 - 2026-11-27: reconciled UnitSpec with merged WaveCut #44; new combined CI required before merge.
+
+- ReceiptSplit PR #45 merged at 95dee70 after successful verify/package 46002059259. WaveCut main Pages 46001895742 and browser 46001895751 passed. UnitSpec reconciled with latest main; new CI required.

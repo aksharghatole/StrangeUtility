@@ -163,6 +163,16 @@
     "notes": "0.1 preview; PNG/JPEG/WebP, A4/Letter, actual-size print and calibration line. Printer/browser verification pending."
   },
   {
+    "id": "receiptsplit",
+    "name": "ReceiptSplit",
+    "category": "Productivity",
+    "description": "Split itemized receipts and shared charges exactly to the cent, privately.",
+    "status": "testing",
+    "path": "apps/receiptsplit/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/receiptsplit",
+    "notes": "0.1 preview: item assignments, deterministic integer rounding, proportional extras, JSON export. Browser and deployment verification pending."
+  },
+  {
     "id": "unitspec",
     "name": "UnitSpec",
     "category": "Engineering",
