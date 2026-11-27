@@ -1,0 +1,4 @@
+# PrintScale 0.1
+Local tiled printing for patterns, posters and diagrams. Choose an image, physical dimensions, paper, margin and overlap, then print at actual size. Browser PDF output is available through the print dialog. Verify the calibration line with a ruler; hardware margins and browser scaling vary. No upload or persistent image storage. Limits: 20 MB input, 40 megapixels after decoding, 100 sheets. Physical print and browser verification pending.
+
+Design rationale: ordinary printer paper is smaller than many sewing patterns and posters; tiled overlap allows assembly without a large-format printer. Candidate heuristic scores (0–10, not measured demand): usefulness 9, feasibility 9, demand 7, privacy/cost 10, uniqueness 7, maintainability 9; weighted 8.65. Alternative: Rasterbator (poster tiling); focus here on measured physical dimensions and calibration rather than halftone effects.
