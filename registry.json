@@ -151,5 +151,15 @@
     "path": "apps/pocketscan/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/pocketscan",
     "notes": "New scanner preview: eight pages, local OCR, crop and filters, image-only PDF and text export; offline and OCR verification pending."
+  },
+  {
+    "id": "printscale",
+    "name": "PrintScale",
+    "category": "Graphics",
+    "description": "Print oversized images and patterns across measured overlapping paper sheets.",
+    "status": "testing",
+    "path": "apps/printscale/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/printscale",
+    "notes": "0.1 preview; PNG/JPEG/WebP, A4/Letter, actual-size print and calibration line. Printer/browser verification pending."
   }
 ]

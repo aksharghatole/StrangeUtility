@@ -45,5 +45,7 @@ for entry in manifest["files"]:
     target = (scanner / entry).resolve()
     assert target.is_relative_to(scanner)
     assert target.is_file() or (entry == "./" and (target / "index.html").is_file()), entry
+for filename in ("index.html", "core.mjs"):
+    assert (root / "apps/printscale" / filename).is_file(), filename
 assert not any(p.suffix in {".py", ".sqlite3", ".db", ".apk"} or p.name == ".env" for p in root.rglob("*") if p.is_file())
 print("Static staging validated.")
