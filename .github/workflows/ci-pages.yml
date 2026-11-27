@@ -56,6 +56,8 @@ jobs:
           cp -R apps/pocketscan/vendor site/apps/pocketscan/
           mkdir -p site/apps/printscale
           cp apps/printscale/index.html apps/printscale/core.mjs site/apps/printscale/
+          mkdir -p site/apps/receiptsplit
+          cp apps/receiptsplit/index.html apps/receiptsplit/core.mjs site/apps/receiptsplit/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name
