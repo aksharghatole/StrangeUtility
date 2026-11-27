@@ -31,6 +31,11 @@ try:
         # 450 cents are weighted by the 1,350/1,350/1,150-cent item subtotals.
         assert [value.inner_text() for value in page.locator(".person .amount").all()] == ["15.08", "15.08", "12.84"]
 
+        page.locator("#payer").select_option("1")
+        page.get_by_role("button", name="Assign full payment").click()
+        assert page.locator("#transfers").inner_text() == "Asha pays Ben 15.08; Chloe pays Ben 12.84"
+        page.get_by_role("button", name="Everyone paid their share").click()
+        assert page.locator("#transfers").inner_text() == "Already settled."
         page.locator("#discount").fill("3.50")
         page.get_by_role("button", name="Calculate split").click()
         assert page.locator("#summary").inner_text() == "Items 38.50 − discount 3.50 + extras 4.50 = 39.50"
