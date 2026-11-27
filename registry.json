@@ -141,5 +141,15 @@
     "path": "apps/filemanifest/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/filemanifest",
     "notes": "0.1 preview; SHA-256, 64 MiB per file, 1000 files; unsigned manifests; CI/browser pending."
+  },
+  {
+    "id": "pocketscan",
+    "name": "PocketScan",
+    "category": "Documents",
+    "description": "Capture and clean document photos, recognize printed English text locally and export PDFs.",
+    "status": "imported",
+    "path": "apps/pocketscan/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/pocketscan",
+    "notes": "New scanner preview: eight pages, local OCR, crop and filters, image-only PDF and text export; offline and OCR verification pending."
   }
 ]

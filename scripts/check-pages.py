@@ -33,5 +33,17 @@ for filename in ("index.html", "style.css", "app.mjs", "core.mjs", "sw.js"):
     assert (root / "apps/tabledelta" / filename).is_file(), filename
 for filename in ("index.html", "style.css", "app.mjs", "core.mjs"):
     assert (root / "apps/wavecut" / filename).is_file(), filename
+scanner = root / "apps/pocketscan"
+for filename in ("index.html", "style.css", "app.mjs", "core.mjs", "sw.js", "manifest.webmanifest", "icon.svg", "vendor/tesseract.min.js", "vendor/tesseract.esm.min.js", "vendor/worker.min.js", "vendor/tesseract-core-lstm.wasm.js", "vendor/tesseract-core-lstm.wasm", "vendor/eng.traineddata.gz", "vendor/pdf-lib.esm.min.mjs"):
+    assert (scanner / filename).is_file(), filename
+data = (scanner / "offline-assets.js").read_text().strip()
+assert data.startswith("self.POCKETSCAN_ASSETS = ") and data.endswith(";")
+manifest = json.loads(data.removeprefix("self.POCKETSCAN_ASSETS = ").removesuffix(";"))
+assert re.fullmatch(r"[a-f0-9]{20}", manifest["version"])
+for entry in manifest["files"]:
+    assert not urlsplit(entry).scheme and entry.startswith("./")
+    target = (scanner / entry).resolve()
+    assert target.is_relative_to(scanner)
+    assert target.is_file() or (entry == "./" and (target / "index.html").is_file()), entry
 assert not any(p.suffix in {".py", ".sqlite3", ".db", ".apk"} or p.name == ".env" for p in root.rglob("*") if p.is_file())
 print("Static staging validated.")

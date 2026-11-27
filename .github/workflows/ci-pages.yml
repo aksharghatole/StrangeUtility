@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python apps/paperwork/prepare_vendor.py
+      - run: python apps/pocketscan/prepare_vendor.py
       - run: npm install --prefix /tmp/dataforge-vendor --ignore-scripts --no-audit --no-fund exceljs@4.4.0
       - name: Stage static application directory
         run: |
@@ -50,6 +51,9 @@ jobs:
           cp apps/subtitlebench/index.html apps/subtitlebench/core.mjs site/apps/subtitlebench/
           mkdir -p site/apps/filemanifest
           cp apps/filemanifest/index.html apps/filemanifest/core.mjs site/apps/filemanifest/
+          mkdir -p site/apps/pocketscan
+          cp apps/pocketscan/index.html apps/pocketscan/style.css apps/pocketscan/app.mjs apps/pocketscan/core.mjs apps/pocketscan/sw.js apps/pocketscan/manifest.webmanifest apps/pocketscan/icon.svg apps/pocketscan/offline-assets.js site/apps/pocketscan/
+          cp -R apps/pocketscan/vendor site/apps/pocketscan/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name
