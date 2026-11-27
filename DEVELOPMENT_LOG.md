@@ -111,3 +111,6 @@ Added mouse and touch drag selection directly on the waveform while retaining th
 
 ## 2026-11-27 — ReceiptSplit 0.1
 WaveCut #44 merged at 64e8ebf after portal 46001648713 and browser 46001648703 succeeded. UnitSpec #43 portal 45970903956 passed but merge returned HTTP 405 conflict; reconcile shared files before retest. New ReceiptSplit: exact integer minor-unit allocation for shared items and proportional tax/tip, JSON export, five core tests. Compared flat equal splitting and item-based splitting conceptually; selected item-based for accuracy (heuristic usefulness/feasibility/demand/privacy/uniqueness/maintenance 9/9/7/10/7/9; weighted 8.65/10). No external demand study. No dependencies or hosting cost. Browser and deployment pending. Next: verify UI, add editable item rows, discounts and settlement workflow.
+
+## 2026-11-27 — ReceiptSplit 0.2 usability
+Replaced the pipe-delimited item textarea with responsive editable item cards and person checkboxes. Names remain easy to enter as a short list; each item now supports direct selection of who shared it. Added and removed items clear stale calculations, and result export remains disabled until a fresh valid calculation. Core integer-cent allocation remains unchanged. Browser regression and Pages verification pending.

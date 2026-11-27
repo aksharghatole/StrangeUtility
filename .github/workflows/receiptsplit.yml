@@ -1,0 +1,32 @@
+name: ReceiptSplit browser integration
+on:
+  pull_request:
+    paths:
+      - 'apps/receiptsplit/**'
+      - 'tests/receiptsplit.test.mjs'
+      - '.github/workflows/receiptsplit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/receiptsplit/**'
+      - 'tests/receiptsplit.test.mjs'
+      - '.github/workflows/receiptsplit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/receiptsplit.test.mjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python apps/receiptsplit/tests/browser_smoke.py
