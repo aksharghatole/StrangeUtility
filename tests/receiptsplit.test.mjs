@@ -9,3 +9,6 @@ test('allocation conservation across varied weights',()=>{for(let a=0;a<500;a++)
 
 test('discount and extras reconcile exactly',()=>{const r=split(['A','B'],[{label:'x',amount:101,people:['A','B']}],9,31);assert.equal(r.total,79);assert.deepEqual(r.people.map(p=>p.discount),[16,15]);assert.equal(r.people.reduce((s,p)=>s+p.total,0),79);});
 test('discount bounds and fully discounted receipt',()=>{const items=[{label:'x',amount:100,people:['A']}];assert.throws(()=>split(['A','B'],items,0,101));assert.equal(split(['A','B'],items,0,100).total,0);assert.throws(()=>split(['A','B'],items,1,100));});
+
+import {settle} from '../apps/receiptsplit/core.mjs';
+test('settlement exact transfers',()=>{const p=[{name:'A',total:100},{name:'B',total:200},{name:'C',total:300}];assert.deepEqual(settle(p,[600,0,0]),[{from:'B',to:'A',amount:200},{from:'C',to:'A',amount:300}]);assert.deepEqual(settle(p,[100,200,300]),[]);assert.throws(()=>settle(p,[0,0,0]));assert.throws(()=>settle(p,[-1,301,300]));});
