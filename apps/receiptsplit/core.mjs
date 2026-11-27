@@ -31,3 +31,20 @@ export function split(names, items, extras=0, discount=0) {
   const surcharge=allocate(extras,net);
   return {names,rows,subtotal,discount,extras,total:subtotal-discount+extras,people:names.map((name,i)=>({name,items:base[i],discount:reductions[i],extras:surcharge[i],total:net[i]+surcharge[i]}))};
 }
+
+export function settle(people, paid) {
+  if (!Array.isArray(people)||!Array.isArray(paid)||people.length!==paid.length||!people.length||people.length>30||people.some(p=>!Number.isSafeInteger(p.total)||p.total<0)||paid.some(v=>!Number.isSafeInteger(v)||v<0)) throw Error('Invalid payments.');
+  const sum=a=>a.reduce((s,v)=>s+BigInt(v),0n);
+  if(sum(paid)!==sum(people.map(p=>p.total))) throw Error('Payments must equal the receipt total.');
+  const balances=people.map((p,i)=>({name:p.name,balance:paid[i]-p.total}));
+  const debt=balances.filter(p=>p.balance<0).map(p=>({...p}));
+  const credit=balances.filter(p=>p.balance>0).map(p=>({...p}));
+  const transfers=[];let i=0,j=0;
+  while(i<debt.length&&j<credit.length){
+    const amount=Math.min(-debt[i].balance,credit[j].balance);
+    transfers.push({from:debt[i].name,to:credit[j].name,amount});
+    debt[i].balance+=amount;credit[j].balance-=amount;
+    if(!debt[i].balance)i++;if(!credit[j].balance)j++;
+  }
+  return transfers;
+}
