@@ -170,6 +170,6 @@
     "status": "testing",
     "path": "apps/receiptsplit/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/receiptsplit",
-    "notes": "0.2 preview: editable item rows with per-person sharing checkboxes, exact-cent allocation, proportional extras and JSON export. Browser and deployment verification pending."
+    "notes": "0.2 preview: editable item rows with per-person sharing checkboxes, exact-cent allocation, proportional extras and JSON export. Browser checks and GitHub Pages deployment passed (runs 46004749615, 46004851825, 46004851724)."
   }
 ]
