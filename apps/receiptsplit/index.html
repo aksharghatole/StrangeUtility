@@ -61,9 +61,12 @@ Chloe</textarea>
       <div id="items" aria-labelledby="items-title"></div>
       <button class="secondary" id="add-item" type="button">Add item</button>
 
+      <label for="discount">Receipt-wide discount</label>
+      <input id="discount" type="text" inputmode="decimal" value="0" maxlength="10">
+      <p class="hint">Allocated proportionally to item shares before extra charges.</p>
       <label for="extras">Total extra charges (tax, tip, service)</label>
       <input id="extras" type="text" inputmode="decimal" value="4.50" maxlength="10" aria-describedby="extras-hint">
-      <p class="hint" id="extras-hint">Extras are allocated in proportion to each person's item subtotal. Leftover cents go to the largest fractional shares first.</p>
+      <p class="hint" id="extras-hint">Extras are allocated in proportion to each person's discounted item subtotal. Leftover cents go to the largest fractional shares first.</p>
       <button id="calculate" type="button">Calculate split</button>
       <button class="secondary" id="clear" type="button">Clear</button>
       <p id="error" role="alert"></p>
@@ -75,7 +78,7 @@ Chloe</textarea>
       <div id="people"></div>
       <button id="download" type="button" disabled>Export JSON receipt</button>
     </section>
-    <p class="muted">Use a single currency with two decimal places. Discounts, transfers and tax-rate calculation are not included in this preview. Nothing is uploaded or saved automatically.</p>
+    <p class="muted">Use a single currency with two decimal places. Transfers and tax-rate calculation are not included in this preview. Nothing is uploaded or saved automatically.</p>
   </main>
   <script type="module">
     import {money,split} from './core.mjs';
@@ -191,7 +194,7 @@ Chloe</textarea>
     }
 
     function renderReport(result){
-      $('summary').textContent=`Items ${format(result.subtotal)} + extras ${format(result.extras)} = ${format(result.total)}`;
+      $('summary').textContent=`Items ${format(result.subtotal)} − discount ${format(result.discount)} + extras ${format(result.extras)} = ${format(result.total)}`;
       for(const person of result.people){
         const card=document.createElement('div');
         card.className='person';
@@ -201,7 +204,7 @@ Chloe</textarea>
         amount.className='amount';
         amount.textContent=format(person.total);
         const detail=document.createElement('small');
-        detail.textContent=`Items ${format(person.items)} · extras ${format(person.extras)}`;
+        detail.textContent=`Items ${format(person.items)} · discount ${format(person.discount)} · extras ${format(person.extras)}`;
         card.append(title,amount,detail);
         $('people').append(card);
       }
@@ -209,6 +212,7 @@ Chloe</textarea>
 
     $('names').addEventListener('input',()=>{refreshParticipants();resetResults();});
     $('extras').addEventListener('input',resetResults);
+    $('discount').addEventListener('input',resetResults);
     $('add-item').addEventListener('click',()=>{
       const row=addItem();
       row.querySelector('input[type=text]').focus();
@@ -225,7 +229,7 @@ Chloe</textarea>
           people:[...row.querySelectorAll('input[type=checkbox]:checked')].map(input=>input.value),
           itemNumber:index+1
         }));
-        report=split(names,items,money($('extras').value.trim()));
+        report=split(names,items,money($('extras').value.trim()),money($('discount').value.trim()));
         renderReport(report);
         $('download').disabled=false;
       }catch(error){
@@ -236,6 +240,7 @@ Chloe</textarea>
     $('clear').addEventListener('click',()=>{
       $('names').value='';
       $('extras').value='0';
+      $('discount').value='0';
       $('items').replaceChildren();
       addItem();
       resetResults();
