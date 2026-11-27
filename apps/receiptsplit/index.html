@@ -15,7 +15,7 @@
     h2{font-size:1.25rem;margin:0 0 8px}
     section{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(16px,3vw,24px);margin:20px 0}
     label,.field-label{display:block;font-weight:650;margin:12px 0 4px}
-    input,textarea,button{font:inherit}
+    input,textarea,button,select{font:inherit} select{max-width:100%;padding:10px}
     input[type=text],input[type=number],textarea{display:block;width:100%;padding:10px;border:1px solid #84978b;border-radius:8px;background:white;color:var(--ink)}
     textarea{min-height:92px;resize:vertical}
     button{background:var(--green);color:white;border:0;border-radius:8px;padding:11px 16px;cursor:pointer;margin:8px 6px 0 0}
@@ -76,7 +76,7 @@ Chloe</textarea>
       <h2 id="results-title">What everyone owes</h2>
       <p id="summary" aria-live="polite">Calculate to see the breakdown.</p>
       <div id="people"></div>
-      <h2>Settle payments</h2><p class="hint">Enter what each person already paid to the merchant. Payments must match the receipt total.</p><div id="payments"></div><button id="settle" disabled>Calculate transfers</button><p id="transfers" role="status"></p><button id="download" type="button" disabled>Export JSON receipt</button>
+      <h2>Settle payments</h2><p class="hint">Enter what each person already paid to the merchant. Payments must match the receipt total.</p><div id="payments"></div><label for="payer">One person paid the whole bill</label><select id="payer" disabled></select><button class="secondary" id="assign-payer" disabled>Assign full payment</button><button class="secondary" id="assign-exact" disabled>Everyone paid their share</button><button id="settle" disabled>Calculate transfers</button><p id="transfers" role="status"></p><button id="download" type="button" disabled>Export JSON receipt</button>
     </section>
     <p class="muted">Use a single currency with two decimal places. Tax-rate calculation is not included in this preview. Nothing is uploaded or saved automatically.</p>
   </main>
@@ -90,7 +90,7 @@ Chloe</textarea>
 
     function resetResults(){
       report=null;
-      $('people').replaceChildren(); $('payments').replaceChildren(); $('transfers').textContent=''; $('settle').disabled=true;
+      $('people').replaceChildren(); $('payments').replaceChildren(); $('transfers').textContent=''; $('settle').disabled=true; $('payer').replaceChildren(); for(const id of ['payer','assign-payer','assign-exact'])$(id).disabled=true;
       $('summary').textContent='Calculate to see the breakdown.';
       $('download').disabled=true;
       $('error').textContent='';
@@ -208,7 +208,8 @@ Chloe</textarea>
         card.append(title,amount,detail);
         $('people').append(card);
         const label=document.createElement('label');label.textContent=person.name+' already paid';
-        const input=document.createElement('input');input.type='text';input.inputMode='decimal';input.value='0';input.maxLength=10;
+        const input=document.createElement('input');input.type='text';input.inputMode='decimal';input.value='0';input.maxLength=16;
+        const option=document.createElement('option');option.value=String($('payer').options.length);option.textContent=person.name;$('payer').append(option);
         input.addEventListener('input',()=>{delete report.transfers;delete report.paid;$('transfers').textContent='Recalculate transfers after editing.';});
         label.append(input);$('payments').append(label);
       }
@@ -234,7 +235,7 @@ Chloe</textarea>
           itemNumber:index+1
         }));
         report=split(names,items,money($('extras').value.trim()),money($('discount').value.trim()));
-        renderReport(report); $('settle').disabled=false;
+        renderReport(report); $('settle').disabled=false; for(const id of ['payer','assign-payer','assign-exact'])$(id).disabled=false;
         $('download').disabled=false;
       }catch(error){
         report=null;
@@ -250,9 +251,16 @@ Chloe</textarea>
       resetResults();
       $('names').focus();
     });
+    function assignPayments(values){
+      if(!report)return;
+      [...$('payments').querySelectorAll('input')].forEach((input,i)=>{input.value=format(values[i]);});
+      $('settle').click();
+    }
+    $('assign-payer').onclick=()=>{if(report)assignPayments(report.people.map((_,i)=>i===Number($('payer').value)?report.total:0));};
+    $('assign-exact').onclick=()=>{if(report)assignPayments(report.people.map(p=>p.total));};
     $('settle').addEventListener('click',()=>{
       if(!report)return;
-      try{const paid=[...$('payments').querySelectorAll('input')].map(i=>money(i.value.trim()));
+      try{const paid=[...$('payments').querySelectorAll('input')].map(i=>{const v=i.value.trim();if(!/^\d{1,10}(?:\.\d{1,2})?$/.test(v))throw Error('Enter a valid payment.');const [a,b='']=v.split('.');return Number(a)*100+Number(b.padEnd(2,'0'));});
       report.transfers=settle(report.people,paid);report.paid=paid;
       $('transfers').textContent=report.transfers.map(t=>t.from+' pays '+t.to+' '+format(t.amount)).join('; ')||'Already settled.';}
       catch(e){delete report.transfers;delete report.paid;$('transfers').textContent=e.message;}
