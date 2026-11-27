@@ -48,7 +48,7 @@ def main():
                 "pages => pages.map(page => [page.style.width, page.style.height])"
             )
             assert page_sizes == [["210mm", "297mm"]] * 6, page_sizes
-            pdf_bytes = page.pdf(print_background=True)
+            pdf_bytes = page.pdf(print_background=True, prefer_css_page_size=True)
             with TemporaryDirectory() as output:
                 pdf = Path(output) / "printscale.pdf"
                 pdf.write_bytes(pdf_bytes)
