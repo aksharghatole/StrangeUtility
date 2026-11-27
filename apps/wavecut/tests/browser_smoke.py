@@ -25,6 +25,16 @@ def main():
             expect(page.locator("#editor")).to_be_visible()
             page.locator("#silence").click()
             assert float(page.locator("#start").input_value()) > .4
+            canvas=page.locator("#wave").bounding_box()
+            assert canvas is not None
+            y=canvas["y"]+canvas["height"]/2
+            page.mouse.move(canvas["x"]+canvas["width"]*.25,y)
+            page.mouse.down()
+            page.mouse.move(canvas["x"]+canvas["width"]*.75,y,steps=4)
+            page.mouse.up()
+            assert abs(float(page.locator("#start").input_value())-1)<.01
+            assert abs(float(page.locator("#end").input_value())-3)<.01
+            expect(page.locator("#wave-hint")).to_contain_text("Drag across the waveform")
             page.locator("#fade-in").fill("0.1")
             page.locator("#fade-out").fill("0.1")
             page.locator("#normalize").check()
@@ -36,7 +46,7 @@ def main():
             d.value.save_as(str(dest))
             with wave.open(str(dest),"rb") as w:
                 assert w.getframerate()==16000 and w.getnchannels()==1
-                assert 48000 < w.getnframes() < 50000
+                assert 31000 < w.getnframes() < 33000
                 data=struct.unpack("<"+"h"*w.getnframes(),w.readframes(w.getnframes()))
                 assert data[0]==data[-1]==0
                 assert abs(max(map(abs,data))-29204)<5
@@ -57,6 +67,7 @@ def main():
             expect(page.locator("#status")).to_contain_text("Expected a WAV")
             expect(page.locator("#output")).to_be_hidden()
             browser.close()
+            print("PASS: silence trim, waveform range drag, fades, normalization, mono/stereo WAV and mobile layout")
     finally:
         server.shutdown();server.server_close();thread.join(timeout=5)
 

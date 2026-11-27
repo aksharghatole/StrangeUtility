@@ -56,6 +56,7 @@
 - Source consolidation complete; outstanding old-app improvements and backend cutover gates are nonblocking unless critical. Allocate at least 80% of rolling development runs to new applications; no successive maintenance-only runs absent critical incidents. Briefly check/merge green PRs, then implement a useful new app or finish a recent one.
 - PR #22 merged after portal CI 45757155334; prior main Pages 45716280957 and TableDelta browser 45716280922 passed.
 - WaveCut 0.1: new audio editor, strict PCM16 WAV parsing, trim, quiet-edge detection, waveform, fades, peak normalization, playback and export. Unit/browser checks pending. Follow-up: offline shell, large-file performance and format compatibility; then rotate to a distinct new utility.
+- WaveCut 0.2: drag across the waveform to choose the edit range, with exact time fields retained. Existing Chromium workflow now checks pointer selection, normalized WAV export, stale-preview invalidation and mobile width. CI pending.
 
 ## 2026-11-26 — SlotWeave 0.1
 New local-first shared availability calculator on feature/slotweave; core, UI, text export and unit tests committed. CI, Pages staging and browser checks pending. Same-day single interval per person, no timezone conversion or persistence. Next: verify staging, keyboard/mobile and multi-window support. PocketScan PR #24 remains independent. No new dependencies or services.
@@ -105,3 +106,5 @@ Rebased the PrintScale preview onto current main after PocketScan landed. Added 
 PocketScan PR #24 is being rebased onto current main. Its unit tests and vendor integrity preparation passed, while the browser smoke test failed because OCR returned an empty result for the printed-text fixture. OCR now dynamically imports the packaged ESM library on demand, then selects the packaged LSTM-only core; the browser test reports app-level failures immediately. Rerun offline OCR and PDF checks after CI. Keep the app preview-only until real OCR, offline reload, and export checks pass.
 
 - 2026-11-27: UnitSpec 0.1 signed asymmetric tolerance chain, RSS estimate and JSON export; core tests committed at c920843e63f8031283a32f529b35a78f3aec4132. CI/browser/deployment pending. Next: visual and keyboard verification. Method: https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir6524.pdf
+
+- 2026-11-27: reconciled UnitSpec with merged WaveCut #44; new combined CI required before merge.
