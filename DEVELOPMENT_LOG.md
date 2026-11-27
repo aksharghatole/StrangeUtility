@@ -105,3 +105,5 @@ Rebased the PocketScan preview onto current main while preserving the newer port
 
 ## 2026-11-27 — PrintScale integration and print verification
 Rebuilt the PrintScale change on top of the current main branch so the launch-only portal and PocketScan package remain intact. Staged the app in GitHub Pages, added a staging guard and strengthened overlap, bounds and sheet-limit tests. Added Chromium coverage for local image preview, six A4 print sheets, generated PDF dimensions and mobile overflow. Physical printer calibration remains device-specific.
+
+- 2026-11-27: UnitSpec 0.1 signed asymmetric tolerance chain, RSS estimate and JSON export; core tests committed at c920843e63f8031283a32f529b35a78f3aec4132. CI/browser/deployment pending. Next: visual and keyboard verification. Method: https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir6524.pdf
