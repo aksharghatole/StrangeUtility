@@ -80,7 +80,7 @@
     "status": "imported",
     "path": "apps/wavecut/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/wavecut",
-    "notes": "New preview: mono/stereo PCM16 WAV only; local processing, waveform, playback and WAV export. Browser verification pending."
+    "notes": "Mono/stereo PCM16 WAV, local processing, waveform drag selection, playback and WAV export. Chromium smoke passed; physical-device check pending."
   },
   {
     "id": "slotweave",

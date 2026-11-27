@@ -107,4 +107,4 @@ Rebased the PocketScan preview onto current main while preserving the newer port
 Rebuilt the PrintScale change on top of the current main branch so the launch-only portal and PocketScan package remain intact. Staged the app in GitHub Pages, added a staging guard and strengthened overlap, bounds and sheet-limit tests. Added Chromium coverage for local image preview, six A4 print sheets, generated PDF dimensions and mobile overflow. Physical printer calibration remains device-specific.
 
 ## 2026-11-27 — WaveCut waveform range editing
-Added mouse and touch drag selection directly on the waveform while retaining the precise time fields as the alternative. Extended WaveCut's existing browser smoke test to verify exact selection boundaries, WAV export, output invalidation and mobile layout. CI pending.
+Added mouse and touch drag selection directly on the waveform while retaining the precise time fields as the alternative. WaveCut browser run 46001648703 passed range selection, normalized WAV export, stale-preview invalidation and mobile layout. Repository verify/package run 46001648713 passed. Physical-device behavior remains to be checked.
