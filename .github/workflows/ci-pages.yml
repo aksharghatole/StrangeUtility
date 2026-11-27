@@ -48,6 +48,8 @@ jobs:
           cp apps/contrastfield/index.html apps/contrastfield/core.mjs site/apps/contrastfield/
           mkdir -p site/apps/subtitlebench
           cp apps/subtitlebench/index.html apps/subtitlebench/core.mjs site/apps/subtitlebench/
+          mkdir -p site/apps/filemanifest
+          cp apps/filemanifest/index.html apps/filemanifest/core.mjs site/apps/filemanifest/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name

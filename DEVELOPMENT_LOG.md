@@ -97,3 +97,6 @@ Continued existing feature/subtitlebench core and tests with working import/past
 
 ## SubtitleBench 0.2 — 2026-11-27
 PR #38 merged, CI 45862634196 passed. New branch feature/subtitlebench-preview adds local video playback, literal active caption display, cue seeking and two-point drift correction. Core regression tests added; CI/browser/deployment pending. #24 and #33 remain failed/conflicted. Browser codec support varies; no video transcoding. Next browser verification and release, then rotate category. No paid resources.
+
+## FileManifest 0.1 — 2026-11-27
+SubtitleBench main workflow 45886435325 reported success. Open #24 and #33 remain separate. New feature/filemanifest implements local SHA-256 snapshots, validated JSON import/export and four-state comparison; core tests added. Core commit 38fc0469e483c9e7da0ac0fc94f749e2175509eb. Heuristic scores 9/9/7/10/7/9 = 8.65/10; demand not independently measured. CI and browser verification pending. Next: verify packaging and real browser folder selection, consider streaming for larger files. No paid resources.
