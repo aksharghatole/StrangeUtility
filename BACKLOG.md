@@ -110,3 +110,5 @@ WaveCut #44 merged at 64e8ebf after portal 46001648713 and browser 46001648703 s
 - ReceiptSplit 0.2: replaced pipe-delimited entry with editable item cards and participant checkboxes. Unit, Chromium browser, package and Pages deployment checks passed (46004749609, 46004749615, 46004851724, 46004851825). Live page verified. Discounts and settlement workflow remain future ideas.
 
 - ReceiptSplit settlement: implementation in PR #49; verify browser payment entry and deployment before release.
+
+- ReceiptSplit payment shortcuts: verify single-payer and exact-share browser flow and deployment; UnitSpec #43 conflict remains.
