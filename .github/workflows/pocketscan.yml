@@ -1,0 +1,33 @@
+name: PocketScan offline OCR and PDF
+on:
+  pull_request:
+    paths:
+      - 'apps/pocketscan/**'
+      - 'tests/pocketscan.test.mjs'
+      - '.github/workflows/pocketscan.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'apps/pocketscan/**'
+      - 'tests/pocketscan.test.mjs'
+      - '.github/workflows/pocketscan.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/pocketscan.test.mjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python apps/pocketscan/prepare_vendor.py
+      - run: python -m pip install playwright==1.51.0 pillow==11.2.1 pypdf==5.4.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python apps/pocketscan/tests/browser_smoke.py
