@@ -14,15 +14,23 @@ test('portal exposes only launchable app destinations', () => {
   ]);
 
   assert.deepEqual(links, [
-    { name: 'Local app', href: 'apps/local/' },
-    { name: 'Hosted app', href: 'https://example.com/app' },
+    { name: 'Local app', description: 'Open this app.', href: 'apps/local/' },
+    { name: 'Hosted app', description: 'Open this app.', href: 'https://example.com/app' },
   ]);
 });
 
-test('portal markup contains no descriptions, filters, or non-app navigation', () => {
+test('portal cards show launch links and short descriptions without filters or extra navigation', () => {
   const html = readFileSync('index.html', 'utf8');
   const source = readFileSync('portal/portal.js', 'utf8');
-  assert.match(html, /<nav id="apps" aria-label="Launch an app"><\/nav>/);
+  assert.match(html, /<section id="apps" class="app-list" aria-label="Apps"><\/section>/);
+  assert.match(source, /description\.textContent = app\.description/);
+  assert.match(source, /rawDescription\.slice\(0, 137\)/);
   assert.doesNotMatch(html, /source and issues|search applications|category/i);
-  assert.doesNotMatch(source, /app\.description|app\.notes|app\.source|androidRelease|apkWorkflow/);
+  assert.doesNotMatch(source, /app\.notes|app\.source|androidRelease|apkWorkflow/);
+});
+
+test('portal trims descriptions and caps their display length', () => {
+  const [app] = launchLinks([{ id: 'local', name: 'Local app', path: 'apps/local/', description: `  ${'A'.repeat(200)}  ` }]);
+  assert.equal(app.description.length, 138);
+  assert.equal(app.description, `${'A'.repeat(137)}…`);
 });

@@ -4,14 +4,17 @@ export function launchLinks(registry) {
   return registry.flatMap((app) => {
     if (!app || typeof app.id !== 'string' || typeof app.name !== 'string' || app.status === 'queued') return [];
 
+    const rawDescription = typeof app.description === 'string' ? app.description.trim() : '';
+    const description = rawDescription.length > 140 ? `${rawDescription.slice(0, 137).trimEnd()}…` : rawDescription;
+
     if (typeof app.path === 'string' && app.path === `apps/${app.id}/`) {
-      return [{ name: app.name, href: app.path }];
+      return [{ name: app.name, description: description || 'Open this app.', href: app.path }];
     }
 
     if (typeof app.existingUrl === 'string') {
       try {
         const url = new URL(app.existingUrl);
-        if (url.protocol === 'https:') return [{ name: app.name, href: url.href }];
+        if (url.protocol === 'https:') return [{ name: app.name, description: description || 'Open this app.', href: url.href }];
       } catch {
         // Invalid or unsafe destinations are not app launch links.
       }
@@ -32,6 +35,8 @@ async function renderPortal() {
     const links = launchLinks(await response.json());
     const fragment = document.createDocumentFragment();
     for (const app of links) {
+      const card = document.createElement('article');
+      card.className = 'app-card';
       const link = document.createElement('a');
       link.className = 'launch-link';
       link.href = app.href;
@@ -42,7 +47,13 @@ async function renderPortal() {
       arrow.setAttribute('aria-hidden', 'true');
       arrow.textContent = '↗';
       link.append(arrow);
-      fragment.append(link);
+
+      const description = document.createElement('p');
+      description.className = 'app-description';
+      description.textContent = app.description;
+
+      card.append(link, description);
+      fragment.append(card);
     }
 
     if (links.length === 0) throw new Error('No app launch links are available.');

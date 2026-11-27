@@ -41,31 +41,41 @@ h1 {
   letter-spacing: -.055em;
 }
 
-#apps {
+.app-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   gap: 12px;
 }
 
-.launch-link {
-  display: flex;
-  min-height: 68px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 17px 19px;
+.app-card {
+  min-width: 0;
+  padding: 16px 18px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);
-  color: var(--ink);
-  font-weight: 700;
-  text-decoration: none;
   transition: border-color 140ms ease, transform 140ms ease;
 }
 
-.launch-link:hover {
+.app-card:hover {
   border-color: var(--accent);
   transform: translateY(-2px);
+}
+
+.launch-link {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.app-description {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: .92rem;
 }
 
 .arrow { color: var(--accent); font-size: 1.25rem; }
