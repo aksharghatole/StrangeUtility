@@ -161,5 +161,15 @@
     "path": "apps/printscale/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/printscale",
     "notes": "0.1 preview; PNG/JPEG/WebP, A4/Letter, actual-size print and calibration line. Printer/browser verification pending."
+  },
+  {
+    "id": "unitspec",
+    "name": "UnitSpec",
+    "category": "Engineering",
+    "description": "Calculate signed assembly tolerance stacks and RSS estimates locally.",
+    "status": "testing",
+    "path": "apps/unitspec/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/unitspec",
+    "notes": "0.1; linear chains only, browser and CI pending."
   }
 ]
