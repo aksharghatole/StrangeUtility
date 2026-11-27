@@ -14,7 +14,7 @@ export function allocate(amount, weights) {
   for(let i=0;i<left;i++)order[i].value++;
   return parts.map(p=>p.value);
 }
-export function split(names, items, extras=0) {
+export function split(names, items, extras=0, discount=0) {
   if(!Array.isArray(names)||names.length<2||names.length>30||names.some(n=>typeof n!=='string'||!n.trim()||n.length>80)||new Set(names).size!==names.length)throw Error('Enter 2–30 unique names.');
   if(!Array.isArray(items)||!items.length||items.length>200||!Number.isSafeInteger(extras)||extras<0||extras>999999999)throw Error('Enter 1–200 items and a valid extra charge.');
   const base=names.map(()=>0);
@@ -24,6 +24,10 @@ export function split(names, items, extras=0) {
     shares.forEach((v,i)=>base[i]+=v);
     return {label:item.label,amount:item.amount,shares};
   });
-  const surcharge=allocate(extras,base);
-  return {names,rows,subtotal:base.reduce((a,b)=>a+b,0),extras,total:base.reduce((a,b)=>a+b,extras),people:names.map((name,i)=>({name,items:base[i],extras:surcharge[i],total:base[i]+surcharge[i]}))};
+  const subtotal=base.reduce((a,b)=>a+b,0);
+  if(!Number.isSafeInteger(discount)||discount<0||discount>subtotal)throw Error('Discount must not exceed item subtotal.');
+  const reductions=allocate(discount,base);
+  const net=base.map((v,i)=>v-reductions[i]);
+  const surcharge=allocate(extras,net);
+  return {names,rows,subtotal,discount,extras,total:subtotal-discount+extras,people:names.map((name,i)=>({name,items:base[i],discount:reductions[i],extras:surcharge[i],total:net[i]+surcharge[i]}))};
 }
