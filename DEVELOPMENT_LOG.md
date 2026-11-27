@@ -117,3 +117,5 @@ Replaced the pipe-delimited item textarea with responsive editable item cards an
 
 ## 2026-11-27 — ReceiptSplit 0.2 release verification
 PR #47 merged at 920216a. Full repository verification and Pages packaging passed in run 46004749609; ReceiptSplit browser checks passed in 46004749615. Main browser run 46004851825 and verify/package/deploy run 46004851724 passed. Confirmed the live Pages app serves the editable item form. Fee rounding fixture uses 450 cents allocated over 1,350/1,350/1,150-cent item subtotals, producing $1.58/$1.58/$1.34. No physical-device test performed.
+
+- ReceiptSplit: added exact-cent payment settlement and JSON transfer export; discount browser assertion fix cd3c469; PR #49. New CI and deployment pending.

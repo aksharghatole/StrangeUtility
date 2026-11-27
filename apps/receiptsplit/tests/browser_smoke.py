@@ -27,10 +27,14 @@ try:
 
         assert page.locator(".receipt-item").count() == 3
         page.get_by_role("button", name="Calculate split").click()
-        assert page.locator("#summary").inner_text() == "Items 38.50 + extras 4.50 = 43.00"
+        assert page.locator("#summary").inner_text() == "Items 38.50 − discount 0.00 + extras 4.50 = 43.00"
         # 450 cents are weighted by the 1,350/1,350/1,150-cent item subtotals.
         assert [value.inner_text() for value in page.locator(".person .amount").all()] == ["15.08", "15.08", "12.84"]
 
+        page.locator("#discount").fill("3.50")
+        page.get_by_role("button", name="Calculate split").click()
+        assert page.locator("#summary").inner_text() == "Items 38.50 − discount 3.50 + extras 4.50 = 39.50"
+        page.locator("#discount").fill("0")
         page.get_by_role("button", name="Add item").click()
         row = page.locator(".receipt-item").last
         row.get_by_label("Item name").fill("Dessert")
@@ -38,14 +42,14 @@ try:
         row.get_by_label("Asha").check()
         row.get_by_label("Chloe").check()
         page.get_by_role("button", name="Calculate split").click()
-        assert page.locator("#summary").inner_text() == "Items 39.50 + extras 4.50 = 44.00"
+        assert page.locator("#summary").inner_text() == "Items 39.50 − discount 0.00 + extras 4.50 = 44.00"
         assert page.get_by_role("button", name="Export JSON receipt").is_enabled()
 
         row.get_by_role("button", name="Remove item 4").click()
         assert page.get_by_role("button", name="Export JSON receipt").is_disabled()
         assert page.locator("#summary").inner_text() == "Calculate to see the breakdown."
         page.get_by_role("button", name="Calculate split").click()
-        assert page.locator("#summary").inner_text() == "Items 38.50 + extras 4.50 = 43.00"
+        assert page.locator("#summary").inner_text() == "Items 38.50 − discount 0.00 + extras 4.50 = 43.00"
 
         first_row = page.locator(".receipt-item").first
         first_row.get_by_label("Asha").uncheck()

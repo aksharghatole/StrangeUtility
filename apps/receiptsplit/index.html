@@ -61,9 +61,12 @@ Chloe</textarea>
       <div id="items" aria-labelledby="items-title"></div>
       <button class="secondary" id="add-item" type="button">Add item</button>
 
+      <label for="discount">Receipt-wide discount</label>
+      <input id="discount" type="text" inputmode="decimal" value="0" maxlength="10">
+      <p class="hint">Allocated proportionally to item shares before extra charges.</p>
       <label for="extras">Total extra charges (tax, tip, service)</label>
       <input id="extras" type="text" inputmode="decimal" value="4.50" maxlength="10" aria-describedby="extras-hint">
-      <p class="hint" id="extras-hint">Extras are allocated in proportion to each person's item subtotal. Leftover cents go to the largest fractional shares first.</p>
+      <p class="hint" id="extras-hint">Extras are allocated in proportion to each person's discounted item subtotal. Leftover cents go to the largest fractional shares first.</p>
       <button id="calculate" type="button">Calculate split</button>
       <button class="secondary" id="clear" type="button">Clear</button>
       <p id="error" role="alert"></p>
@@ -73,12 +76,12 @@ Chloe</textarea>
       <h2 id="results-title">What everyone owes</h2>
       <p id="summary" aria-live="polite">Calculate to see the breakdown.</p>
       <div id="people"></div>
-      <button id="download" type="button" disabled>Export JSON receipt</button>
+      <h2>Settle payments</h2><p class="hint">Enter what each person already paid to the merchant. Payments must match the receipt total.</p><div id="payments"></div><button id="settle" disabled>Calculate transfers</button><p id="transfers" role="status"></p><button id="download" type="button" disabled>Export JSON receipt</button>
     </section>
-    <p class="muted">Use a single currency with two decimal places. Discounts, transfers and tax-rate calculation are not included in this preview. Nothing is uploaded or saved automatically.</p>
+    <p class="muted">Use a single currency with two decimal places. Tax-rate calculation is not included in this preview. Nothing is uploaded or saved automatically.</p>
   </main>
   <script type="module">
-    import {money,split} from './core.mjs';
+    import {money,split,settle} from './core.mjs';
 
     const $=id=>document.getElementById(id);
     let report=null;
@@ -87,7 +90,7 @@ Chloe</textarea>
 
     function resetResults(){
       report=null;
-      $('people').replaceChildren();
+      $('people').replaceChildren(); $('payments').replaceChildren(); $('transfers').textContent=''; $('settle').disabled=true;
       $('summary').textContent='Calculate to see the breakdown.';
       $('download').disabled=true;
       $('error').textContent='';
@@ -191,7 +194,7 @@ Chloe</textarea>
     }
 
     function renderReport(result){
-      $('summary').textContent=`Items ${format(result.subtotal)} + extras ${format(result.extras)} = ${format(result.total)}`;
+      $('summary').textContent=`Items ${format(result.subtotal)} − discount ${format(result.discount)} + extras ${format(result.extras)} = ${format(result.total)}`;
       for(const person of result.people){
         const card=document.createElement('div');
         card.className='person';
@@ -201,14 +204,19 @@ Chloe</textarea>
         amount.className='amount';
         amount.textContent=format(person.total);
         const detail=document.createElement('small');
-        detail.textContent=`Items ${format(person.items)} · extras ${format(person.extras)}`;
+        detail.textContent=`Items ${format(person.items)} · discount ${format(person.discount)} · extras ${format(person.extras)}`;
         card.append(title,amount,detail);
         $('people').append(card);
+        const label=document.createElement('label');label.textContent=person.name+' already paid';
+        const input=document.createElement('input');input.type='text';input.inputMode='decimal';input.value='0';input.maxLength=10;
+        input.addEventListener('input',()=>{delete report.transfers;delete report.paid;$('transfers').textContent='Recalculate transfers after editing.';});
+        label.append(input);$('payments').append(label);
       }
     }
 
     $('names').addEventListener('input',()=>{refreshParticipants();resetResults();});
     $('extras').addEventListener('input',resetResults);
+    $('discount').addEventListener('input',resetResults);
     $('add-item').addEventListener('click',()=>{
       const row=addItem();
       row.querySelector('input[type=text]').focus();
@@ -225,8 +233,8 @@ Chloe</textarea>
           people:[...row.querySelectorAll('input[type=checkbox]:checked')].map(input=>input.value),
           itemNumber:index+1
         }));
-        report=split(names,items,money($('extras').value.trim()));
-        renderReport(report);
+        report=split(names,items,money($('extras').value.trim()),money($('discount').value.trim()));
+        renderReport(report); $('settle').disabled=false;
         $('download').disabled=false;
       }catch(error){
         report=null;
@@ -236,10 +244,18 @@ Chloe</textarea>
     $('clear').addEventListener('click',()=>{
       $('names').value='';
       $('extras').value='0';
+      $('discount').value='0';
       $('items').replaceChildren();
       addItem();
       resetResults();
       $('names').focus();
+    });
+    $('settle').addEventListener('click',()=>{
+      if(!report)return;
+      try{const paid=[...$('payments').querySelectorAll('input')].map(i=>money(i.value.trim()));
+      report.transfers=settle(report.people,paid);report.paid=paid;
+      $('transfers').textContent=report.transfers.map(t=>t.from+' pays '+t.to+' '+format(t.amount)).join('; ')||'Already settled.';}
+      catch(e){delete report.transfers;delete report.paid;$('transfers').textContent=e.message;}
     });
     $('download').addEventListener('click',()=>{
       if(!report)return;
