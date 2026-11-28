@@ -112,3 +112,5 @@ WaveCut #44 merged at 64e8ebf after portal 46001648713 and browser 46001648703 s
 - ReceiptSplit settlement: implementation in PR #49; verify browser payment entry and deployment before release.
 
 - ReceiptSplit payment shortcuts: verify single-payer and exact-share browser flow and deployment; UnitSpec #43 conflict remains.
+
+- ReceiptSplit text summary implemented in PR #50; verify download regression and deployment.
