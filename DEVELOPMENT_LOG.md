@@ -125,3 +125,5 @@ PR #47 merged at 920216a. Full repository verification and Pages packaging passe
 - ReceiptSplit 0.5: plain-text summary download including current transfers; browser download regression added to PR #50. Previous head fc933da passed both workflows; new head pending.
 
 - ReceiptSplit #50 merged at 48c4792 after browser and portal CI passed. Follow-up: preserve deliberately empty participant assignments when adding items or editing names; invalidate stale exports on adding rows. Regression coverage added; CI pending.
+
+- ReceiptSplit #51 merged at 0adedc5 after CI 46104294257 and 46104294275 passed. Added per-item select everyone / clear selection with isolated assignment and stale-export regression coverage. New CI and deployment pending.

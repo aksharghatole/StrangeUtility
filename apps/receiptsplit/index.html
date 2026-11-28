@@ -186,7 +186,25 @@ Chloe</textarea>
       const participants=document.createElement('div');
       participants.className='participants';
       participants.setAttribute('aria-label',`People sharing item ${id}`);
-      row.append(legend,heading,fields,whoLabel,participants);
+      const shortcuts=document.createElement('div');
+      for(const [caption,checked] of [['Select everyone',true],['Clear selection',false]]){
+        const button=document.createElement('button');
+        button.type='button';button.className='secondary';button.textContent=caption;
+        button.addEventListener('click',()=>{
+          for(const input of participants.querySelectorAll('input[type=checkbox]'))input.checked=checked;
+          resetResults();
+        });
+        shortcuts.append(button);
+      }
+      const duplicate=document.createElement('button');
+      duplicate.type='button';duplicate.className='secondary';duplicate.textContent='Duplicate item';
+      duplicate.addEventListener('click',()=>{
+        const copy=addItem(labelInput.value,amountInput.value,[...participants.querySelectorAll('input:checked')].map(input=>input.value));
+        resetResults();
+        copy.querySelector('input[type=text]').focus();
+      });
+      shortcuts.append(duplicate);
+      row.append(legend,heading,fields,whoLabel,shortcuts,participants);
       $('items').append(row);
       refreshParticipants();
       if(selectedNames){
