@@ -127,3 +127,7 @@ PR #47 merged at 920216a. Full repository verification and Pages packaging passe
 - ReceiptSplit #50 merged at 48c4792 after browser and portal CI passed. Follow-up: preserve deliberately empty participant assignments when adding items or editing names; invalidate stale exports on adding rows. Regression coverage added; CI pending.
 
 - ReceiptSplit #51 merged at 0adedc5 after CI 46104294257 and 46104294275 passed. Added per-item select everyone / clear selection with isolated assignment and stale-export regression coverage. New CI and deployment pending.
+
+
+## 2026-11-28 — ReceiptSplit clipboard sharing
+PR #52 merged at 874ed738 after workflows 46117790039 and 46117790093 passed. Clipboard sharing implementation 5b44e49 and browser regression 536d636 committed; new CI and deployment unverified.
