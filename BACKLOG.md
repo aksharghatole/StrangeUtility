@@ -124,3 +124,5 @@ WaveCut #44 merged at 64e8ebf after portal 46001648713 and browser 46001648703 s
 Clipboard sharing implemented; verify permission denial, browser CI and physical mobile sharing. Existing migration gaps unchanged.
 
 - ValueLens 0.1: local unit-price comparison across mass, volume and count; unit and formula-injection regression tests written. CI and browser verification pending. Comparisons require one currency per session; no persistence or network requests.
+
+- BatchRename 0.1 (PR #55): local filename planning, literal replacement, numbering, collision checks and JSON export. Regression tests written; browser and deployment verification pending. No files modified by app.
