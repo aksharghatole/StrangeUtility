@@ -43,7 +43,7 @@ test('CSV quotes cells and guards formula-like product names', () => {
     {name:'safe, "name"',price:2,amount:1,unit:'item'}
   ]);
   const csv=comparisonCsv(groups,'INR');
-  assert.match(csv, /"'=IMPORTXML(""x"")"/);
-  assert.match(csv, /"safe, ""name"""/);
-  assert.match(csv, /"INR"/);
+  assert.ok(csv.includes("\"'=IMPORTXML(\"\"x\"\")\""));
+  assert.ok(csv.includes("\"safe, \"\"name\"\"\""));
+  assert.ok(csv.includes('"INR"'));
 });
