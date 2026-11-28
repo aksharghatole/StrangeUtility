@@ -39,9 +39,15 @@ try:
         summary = download.value.path().read_text(encoding="utf-8")
         assert "Total: 43.00" in summary
         assert "Asha pays Ben 15.08" in summary
+        page.context.grant_permissions(["clipboard-read", "clipboard-write"])
+        page.get_by_role("button", name="Copy summary").click()
+        page.wait_for_function("document.querySelector('#copy-status').textContent === 'Summary copied.'")
+        assert page.evaluate("navigator.clipboard.readText()") == summary
         page.get_by_role("button", name="Everyone paid their share").click()
         assert page.locator("#transfers").inner_text() == "Already settled."
         page.locator("#discount").fill("3.50")
+        assert page.locator("#copy-summary").is_disabled()
+        assert page.locator("#copy-status").inner_text() == ""
         page.get_by_role("button", name="Calculate split").click()
         assert page.locator("#summary").inner_text() == "Items 38.50 − discount 3.50 + extras 4.50 = 39.50"
         page.locator("#discount").fill("0")
