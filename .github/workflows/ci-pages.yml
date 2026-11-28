@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --test tests/*.test.mjs
+      - run: node --test tests/*.test.mjs apps/batchrename/core.test.mjs
   package:
     needs: verify
     runs-on: ubuntu-24.04
@@ -60,6 +60,8 @@ jobs:
           cp apps/receiptsplit/index.html apps/receiptsplit/core.mjs site/apps/receiptsplit/
           mkdir -p site/apps/valuelens
           cp apps/valuelens/index.html apps/valuelens/core.mjs site/apps/valuelens/
+          mkdir -p site/apps/batchrename
+          cp apps/batchrename/index.html apps/batchrename/core.mjs site/apps/batchrename/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name
