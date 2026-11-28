@@ -58,6 +58,8 @@ jobs:
           cp apps/printscale/index.html apps/printscale/core.mjs site/apps/printscale/
           mkdir -p site/apps/receiptsplit
           cp apps/receiptsplit/index.html apps/receiptsplit/core.mjs site/apps/receiptsplit/
+          mkdir -p site/apps/valuelens
+          cp apps/valuelens/index.html apps/valuelens/core.mjs site/apps/valuelens/
           python scripts/check-pages.py site
       - name: Set artifact name
         id: name

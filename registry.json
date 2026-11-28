@@ -171,5 +171,15 @@
     "path": "apps/receiptsplit/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/receiptsplit",
     "notes": "0.7 preview: exact-cent settlement, bulk assignment, duplication and clipboard/text export. Bulk assignment and duplication CI passed; clipboard CI pending."
+  },
+  {
+    "id": "valuelens",
+    "name": "ValueLens",
+    "category": "Shopping",
+    "description": "Compare pack prices by mass, volume or count without mixing unlike units.",
+    "status": "testing",
+    "path": "apps/valuelens/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/valuelens",
+    "notes": "0.1 local-only preview; one currency per comparison, exact unit conversions, separate mass/volume/count rankings and CSV export. CI and browser verification pending."
   }
 ]

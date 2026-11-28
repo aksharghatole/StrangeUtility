@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f3ee">
+<title>ValueLens — compare pack value</title>
+<style>
+:root{color-scheme:light;--ink:#202a25;--muted:#5a675f;--paper:#f4f3ee;--card:#fff;--line:#d8ddd7;--accent:#176b51;--best:#e5f4ea}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,sans-serif}
+main{max-width:1020px;margin:auto;padding:24px}a{color:var(--accent)}header{padding:18px 0 10px}h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.05;letter-spacing:-.04em;margin:.3em 0}header p{max-width:650px;color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0;box-shadow:0 8px 30px #23352b0a}
+.toolbar,.row,.actions{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.field{display:grid;gap:5px;flex:1 1 130px}.field label{font-weight:650;font-size:.9rem}
+input,select,button{font:inherit;border:1px solid #aebbb1;border-radius:9px;padding:10px 12px;min-height:44px;background:white;color:var(--ink)}input{width:100%}
+button{cursor:pointer;background:var(--accent);color:white;border-color:var(--accent);font-weight:650}button.secondary{background:white;color:var(--ink);border-color:var(--line)}button.remove{background:white;color:#8c2f2a;border-color:#d5a9a4}
+.products{display:grid;gap:12px;margin:18px 0}.row{padding:14px;border:1px solid var(--line);border-radius:12px}.row .name{flex:2 1 180px}.row .price,.row .amount{flex:1 1 110px}.row .unit{flex:1 1 130px}.row .remove{align-self:end}
+.currency{max-width:160px}.actions{margin-top:18px}.results{overflow:auto}table{width:100%;border-collapse:collapse;margin-top:12px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:11px;white-space:nowrap}th{font-size:.85rem;color:var(--muted)}tr.best{background:var(--best)}.badge{font-size:.75rem;font-weight:700;color:#145d39;margin-left:6px}.empty{color:var(--muted)}.notice{color:var(--muted);font-size:.92rem}
+:focus-visible{outline:3px solid #d87720;outline-offset:2px}
+@media(max-width:640px){main{padding:16px}.panel{padding:15px}.row{display:grid;grid-template-columns:1fr 1fr}.row .name{grid-column:1/-1}.row .remove{grid-column:1/-1}}
+</style>
+</head>
+<body><main>
+<a href="../../">← StrangeUtility</a>
+<header><p>SHOPPING · PRIVATE BY DEFAULT</p><h1>See what your money buys.</h1><p>Compare pack sizes using one currency. ValueLens converts supported units and ranks mass, volume and count separately. Your entries stay in this browser tab.</p></header>
+<section class="panel" aria-labelledby="entry-title">
+<div class="toolbar"><div><h2 id="entry-title">Products</h2><p class="notice">Add at least two products. Different currencies cannot be compared in the same list.</p></div>
+<div class="field currency"><label for="currency">Currency code</label><input id="currency" value="INR" maxlength="3" autocomplete="off" aria-describedby="currency-hint"><span id="currency-hint" class="notice">For example, INR or USD.</span></div></div>
+<form id="form"><div id="products" class="products"></div>
+<div class="actions"><button type="button" id="add" class="secondary">Add product</button><button type="submit">Compare value</button><button type="button" id="export" class="secondary" disabled>Download CSV</button><button type="button" id="reset" class="secondary">Load examples</button></div></form>
+<p id="status" role="status" aria-live="polite" class="notice"></p>
+</section>
+<section class="panel results" aria-labelledby="result-title"><h2 id="result-title">Comparison</h2><div id="results" class="empty">Your ranked comparison will appear here.</div></section>
+<p class="notice">Mass converts to price per 100 g, volume to price per 100 ml, and count to price per item. The app does not convert currencies, include shipping or discounts, or save product data.</p>
+</main>
+<script type="module">
+import {compareProducts,comparisonCsv} from './core.mjs';
+const $=id=>document.getElementById(id);
+const units=[['g','Grams (g)'],['kg','Kilograms (kg)'],['oz','Ounces (oz)'],['lb','Pounds (lb)'],['ml','Millilitres (ml)'],['l','Litres (L)'],['fl-oz','Fluid ounces (fl oz)'],['item','Items']];
+let lastGroups=null;
+function addRow(values={name:'',price:'',amount:'',unit:'kg'}){
+ const row=document.createElement('div');row.className='row';
+ const fields=[['name','Product name','text',values.name,'name'],['price','Pack price','number',values.price,'price'],['amount','Pack quantity','number',values.amount,'amount']];
+ for(const [key,label,type,value,cls] of fields){const wrap=document.createElement('div');wrap.className='field '+cls;const lab=document.createElement('label');lab.textContent=label;const input=document.createElement('input');input.name=key;input.type=type;input.value=value;input.required=true;if(key==='name')input.maxLength=80;if(type==='number'){input.min=key==='price'?'0':'0.000001';input.step='any';input.inputMode='decimal'}lab.htmlFor='field-'+key;input.id='field-'+key+'-'+document.querySelectorAll('.row').length;lab.htmlFor=input.id;wrap.append(lab,input);row.append(wrap)}
+ const wrap=document.createElement('div');wrap.className='field unit';const lab=document.createElement('label');lab.textContent='Unit';const select=document.createElement('select');select.name='unit';select.required=true;for(const [value,label] of units){const option=document.createElement('option');option.value=value;option.textContent=label;select.append(option)}select.value=values.unit;lab.htmlFor='unit-'+document.querySelectorAll('.row').length;select.id=lab.htmlFor;wrap.append(lab,select);row.append(wrap);
+ const remove=document.createElement('button');remove.type='button';remove.className='remove';remove.textContent='Remove';remove.setAttribute('aria-label','Remove product row');remove.onclick=()=>{row.remove();invalidate()};row.append(remove);
+ row.addEventListener('input',invalidate);row.addEventListener('change',invalidate);$('products').append(row);
+}
+function invalidate(){lastGroups=null;$('export').disabled=true;$('results').replaceChildren(Object.assign(document.createElement('p'),{className:'empty',textContent:'Details changed. Compare again to refresh results.'}));$('status').textContent=''}
+function values(){return [...document.querySelectorAll('.row')].map(row=>Object.fromEntries(new FormDataRow(row)))}
+function FormDataRow(row){return [...row.querySelectorAll('input,select')].map(el=>[el.name,el.value])}
+function render(groups,currency){const host=$('results');host.replaceChildren();const title={mass:'Mass products — price per 100 g',volume:'Volume products — price per 100 ml',count:'Count products — price per item'};for(const group of groups){const heading=document.createElement('h3');heading.textContent=title[group.dimension];host.append(heading);const table=document.createElement('table');const thead=document.createElement('thead');const tr=document.createElement('tr');for(const label of ['Rank','Product','Pack','Price per '+group.standardLabel]){const th=document.createElement('th');th.textContent=label;tr.append(th)}thead.append(tr);table.append(thead);const tbody=document.createElement('tbody');group.items.forEach((item,index)=>{const row=document.createElement('tr');if(index===0)row.className='best';const cells=[String(index+1),item.name,item.amount+' '+item.unitLabel,currency+' '+item.pricePerStandard.toFixed(2)];for(const text of cells){const td=document.createElement('td');td.textContent=text;row.append(td)}if(index===0){const rank=row.firstElementChild;rank.textContent='1';const badge=document.createElement('span');badge.className='badge';badge.textContent='Best value';rank.append(badge)}tbody.append(row)});table.append(tbody);host.append(table)}}
+$('add').onclick=()=>addRow();
+$('reset').onclick=()=>{$('products').replaceChildren();$('currency').value='INR';addRow({name:'Rice · 5 kg bag',price:'420',amount:'5',unit:'kg'});addRow({name:'Rice · 1 kg bag',price:'92',amount:'1',unit:'kg'});addRow({name:'Rice · 2 kg bag',price:'180',amount:'2',unit:'kg'});invalidate()};
+$('currency').addEventListener('input',invalidate);
+$('form').onsubmit=e=>{e.preventDefault();$('export').disabled=true;try{const currency=$('currency').value.trim().toUpperCase();if(!/^[A-Z]{3}$/.test(currency))throw new Error('Enter a three-letter currency code.');const groups=compareProducts(values());render(groups,currency);lastGroups=groups;$('status').textContent='Ranked '+groups.reduce((n,g)=>n+g.items.length,0)+' products across '+groups.length+' comparable unit groups.';$('export').disabled=false}catch(error){$('results').replaceChildren(Object.assign(document.createElement('p'),{className:'empty',textContent:'Add valid product details to compare.'}));$('status').textContent=error.message}};
+$('export').onclick=()=>{if(!lastGroups)return;const csv=comparisonCsv(lastGroups,$('currency').value.trim().toUpperCase()),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download='valuelens-comparison.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('reset').click();
+</script>
+</body></html>

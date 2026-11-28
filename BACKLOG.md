@@ -122,3 +122,5 @@ WaveCut #44 merged at 64e8ebf after portal 46001648713 and browser 46001648703 s
 
 ## 2026-11-28 — ReceiptSplit clipboard sharing
 Clipboard sharing implemented; verify permission denial, browser CI and physical mobile sharing. Existing migration gaps unchanged.
+
+- ValueLens 0.1: local unit-price comparison across mass, volume and count; unit and formula-injection regression tests written. CI and browser verification pending. Comparisons require one currency per session; no persistence or network requests.
