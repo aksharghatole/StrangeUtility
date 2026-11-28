@@ -170,6 +170,6 @@
     "status": "testing",
     "path": "apps/receiptsplit/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/receiptsplit",
-    "notes": "0.5 preview: exact-cent settlement, payment shortcuts and shareable plain-text summary; CI pending."
+    "notes": "0.5 preview: exact-cent settlement, payment shortcuts and shareable plain-text summary; CI pending. Assignment integrity fix: preserve deliberately empty selections and invalidate exports when adding items; verification pending."
   }
 ]

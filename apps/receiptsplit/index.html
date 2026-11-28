@@ -105,6 +105,7 @@ Chloe</textarea>
       for(const row of $('items').querySelectorAll('.receipt-item')){
         const previous=new Set([...row.querySelectorAll('input[type=checkbox]:checked')].map(input=>input.value));
         const list=row.querySelector('.participants');
+        const initialized=list.dataset.initialized==='true';
         list.replaceChildren();
         if(!names.length){
           const hint=document.createElement('p');
@@ -119,11 +120,12 @@ Chloe</textarea>
           const input=document.createElement('input');
           input.type='checkbox';
           input.value=name;
-          input.checked=previous.has(name) || (previous.size===0 && index===0);
+          input.checked=previous.has(name) || (!initialized && index===0);
           input.addEventListener('change',resetResults);
           label.append(input,document.createTextNode(name));
           list.append(label);
         });
+        list.dataset.initialized='true';
       }
     }
 
@@ -220,6 +222,7 @@ Chloe</textarea>
     $('discount').addEventListener('input',resetResults);
     $('add-item').addEventListener('click',()=>{
       const row=addItem();
+      resetResults();
       row.querySelector('input[type=text]').focus();
     });
     $('calculate').addEventListener('click',()=>{
