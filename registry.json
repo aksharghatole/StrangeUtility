@@ -170,6 +170,6 @@
     "status": "testing",
     "path": "apps/receiptsplit/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/receiptsplit",
-    "notes": "0.4 preview: exact-cent discounts, settlement, single-payer and exact-share shortcuts; new browser verification pending."
+    "notes": "0.5 preview: exact-cent settlement, payment shortcuts and shareable plain-text summary; CI pending."
   }
 ]
