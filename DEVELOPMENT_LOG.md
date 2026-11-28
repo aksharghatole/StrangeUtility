@@ -131,3 +131,7 @@ PR #47 merged at 920216a. Full repository verification and Pages packaging passe
 
 ## 2026-11-28 — ReceiptSplit clipboard sharing
 PR #52 merged at 874ed738 after workflows 46117790039 and 46117790093 passed. Clipboard sharing implementation 5b44e49 and browser regression 536d636 committed; new CI and deployment unverified.
+
+
+## 2026-11-28 — ValueLens 0.1
+Added a local-first pack-price comparator for mass, volume and item-count products. It converts supported units to standard bases, ranks only like-for-like dimensions, keeps one currency per comparison and exports a formula-safe CSV. Core regression tests are included. CI and browser verification are pending; no local run or deployment is claimed.
