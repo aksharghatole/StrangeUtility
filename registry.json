@@ -170,6 +170,6 @@
     "status": "testing",
     "path": "apps/receiptsplit/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/receiptsplit",
-    "notes": "0.6 preview: exact-cent settlement, text export and per-item bulk assignment shortcuts; new CI pending."
+    "notes": "0.7 preview: exact-cent settlement, bulk assignment, duplication and clipboard/text export. Bulk assignment and duplication CI passed; clipboard CI pending."
   }
 ]
