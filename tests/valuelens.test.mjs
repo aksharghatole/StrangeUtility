@@ -10,7 +10,7 @@ test('converts mass and ranks equivalent pack quantities', () => {
   assert.equal(groups.length, 1);
   assert.equal(groups[0].standardLabel, '100 g');
   assert.equal(groups[0].items[0].name, 'large');
-  assert.equal(groups[0].items[0].pricePerStandard, 0.7);
+  assert.ok(Math.abs(groups[0].items[0].pricePerStandard - 0.7) < 1e-12);
 });
 
 test('separates mass, volume and count rather than comparing unlike quantities', () => {
