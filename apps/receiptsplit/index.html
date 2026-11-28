@@ -76,7 +76,7 @@ Chloe</textarea>
       <h2 id="results-title">What everyone owes</h2>
       <p id="summary" aria-live="polite">Calculate to see the breakdown.</p>
       <div id="people"></div>
-      <h2>Settle payments</h2><p class="hint">Enter what each person already paid to the merchant. Payments must match the receipt total.</p><div id="payments"></div><label for="payer">One person paid the whole bill</label><select id="payer" disabled></select><button class="secondary" id="assign-payer" disabled>Assign full payment</button><button class="secondary" id="assign-exact" disabled>Everyone paid their share</button><button id="settle" disabled>Calculate transfers</button><p id="transfers" role="status"></p><button id="download" type="button" disabled>Export JSON receipt</button>
+      <h2>Settle payments</h2><p class="hint">Enter what each person already paid to the merchant. Payments must match the receipt total.</p><div id="payments"></div><label for="payer">One person paid the whole bill</label><select id="payer" disabled></select><button class="secondary" id="assign-payer" disabled>Assign full payment</button><button class="secondary" id="assign-exact" disabled>Everyone paid their share</button><button id="settle" disabled>Calculate transfers</button><p id="transfers" role="status"></p><button id="text-export" type="button" disabled>Download text summary</button><button id="download" type="button" disabled>Export JSON receipt</button>
     </section>
     <p class="muted">Use a single currency with two decimal places. Tax-rate calculation is not included in this preview. Nothing is uploaded or saved automatically.</p>
   </main>
@@ -92,7 +92,7 @@ Chloe</textarea>
       report=null;
       $('people').replaceChildren(); $('payments').replaceChildren(); $('transfers').textContent=''; $('settle').disabled=true; $('payer').replaceChildren(); for(const id of ['payer','assign-payer','assign-exact'])$(id).disabled=true;
       $('summary').textContent='Calculate to see the breakdown.';
-      $('download').disabled=true;
+      $('download').disabled=true; $('text-export').disabled=true;
       $('error').textContent='';
     }
 
@@ -236,7 +236,7 @@ Chloe</textarea>
         }));
         report=split(names,items,money($('extras').value.trim()),money($('discount').value.trim()));
         renderReport(report); $('settle').disabled=false; for(const id of ['payer','assign-payer','assign-exact'])$(id).disabled=false;
-        $('download').disabled=false;
+        $('download').disabled=false; $('text-export').disabled=false;
       }catch(error){
         report=null;
         $('error').textContent=error.message;
@@ -264,6 +264,12 @@ Chloe</textarea>
       report.transfers=settle(report.people,paid);report.paid=paid;
       $('transfers').textContent=report.transfers.map(t=>t.from+' pays '+t.to+' '+format(t.amount)).join('; ')||'Already settled.';}
       catch(e){delete report.transfers;delete report.paid;$('transfers').textContent=e.message;}
+    });
+    $('text-export').addEventListener('click',()=>{
+      if(!report)return;
+      const lines=['ReceiptSplit summary','Total: '+format(report.total),'',...report.people.map(p=>p.name+': '+format(p.total)),'',...(report.transfers?['Transfers:',...report.transfers.map(t=>t.from+' pays '+t.to+' '+format(t.amount)),...(report.transfers.length?[]:['Already settled.'])]:['Payments not reconciled.'])];
+      const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}));
+      const link=document.createElement('a');link.href=url;link.download='receipt-summary.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     });
     $('download').addEventListener('click',()=>{
       if(!report)return;
