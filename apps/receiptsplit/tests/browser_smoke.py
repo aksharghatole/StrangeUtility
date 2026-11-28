@@ -63,8 +63,15 @@ try:
         assert page.locator("#summary").inner_text() == "Items 38.50 − discount 0.00 + extras 4.50 = 43.00"
 
         first_row = page.locator(".receipt-item").first
-        first_row.get_by_label("Asha").uncheck()
-        first_row.get_by_label("Ben").uncheck()
+        first_row.get_by_role("button", name="Select everyone").click()
+        assert first_row.locator("input[type=checkbox]:checked").count() == 3
+        assert page.locator(".receipt-item").nth(1).locator("input[type=checkbox]:checked").count() == 1
+        assert page.get_by_role("button", name="Export JSON receipt").is_disabled()
+        page.get_by_role("button", name="Calculate split").click()
+        assert page.get_by_role("button", name="Export JSON receipt").is_enabled()
+        first_row.get_by_role("button", name="Clear selection").click()
+        assert first_row.locator("input[type=checkbox]:checked").count() == 0
+        assert page.get_by_role("button", name="Export JSON receipt").is_disabled()
         page.get_by_role("button", name="Calculate split").click()
         assert "invalid item" in page.get_by_role("alert").inner_text().lower()
         assert page.get_by_role("button", name="Export JSON receipt").is_disabled()
