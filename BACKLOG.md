@@ -118,3 +118,7 @@ WaveCut #44 merged at 64e8ebf after portal 46001648713 and browser 46001648703 s
 - ReceiptSplit assignment integrity: verify empty selections persist across row/name changes and adding rows invalidates exports; browser CI pending.
 
 - ReceiptSplit #51 merged at 0adedc5 after CI 46104294257 and 46104294275 passed. Added per-item select everyone / clear selection with isolated assignment and stale-export regression coverage. New CI and deployment pending.
+
+
+## 2026-11-28 — ReceiptSplit clipboard sharing
+Clipboard sharing implemented; verify permission denial, browser CI and physical mobile sharing. Existing migration gaps unchanged.
