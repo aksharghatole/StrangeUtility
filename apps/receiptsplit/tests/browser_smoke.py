@@ -46,6 +46,7 @@ try:
         assert page.locator("#summary").inner_text() == "Items 38.50 − discount 3.50 + extras 4.50 = 39.50"
         page.locator("#discount").fill("0")
         page.get_by_role("button", name="Add item").click()
+        assert page.get_by_role("button", name="Export JSON receipt").is_disabled()
         row = page.locator(".receipt-item").last
         row.get_by_label("Item name").fill("Dessert")
         row.get_by_label("Amount").fill("1.00")
@@ -68,6 +69,12 @@ try:
         assert "invalid item" in page.get_by_role("alert").inner_text().lower()
         assert page.get_by_role("button", name="Export JSON receipt").is_disabled()
 
+        # Adding a row must not silently reassign an intentionally empty item.
+        page.get_by_role("button", name="Add item").click()
+        assert not first_row.get_by_label("Asha").is_checked()
+        assert not first_row.get_by_label("Ben").is_checked()
+        page.locator("#names").fill("Asha\nBen\nChloe\nDev")
+        assert not first_row.get_by_label("Asha").is_checked()
         page.get_by_role("button", name="Clear").click()
         assert page.locator(".receipt-item").count() == 1
         assert page.locator("#names").input_value() == ""
