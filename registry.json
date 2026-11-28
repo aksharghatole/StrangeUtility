@@ -181,5 +181,15 @@
     "path": "apps/valuelens/",
     "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/valuelens",
     "notes": "0.1 local-only preview; one currency per comparison, exact unit conversions, separate mass/volume/count rankings and CSV export. CI and browser verification pending."
+  },
+  {
+    "id": "batchrename",
+    "name": "BatchRename",
+    "category": "Productivity",
+    "description": "Preview bulk filename changes, detect collisions and export rename mappings.",
+    "status": "testing",
+    "path": "apps/batchrename/",
+    "source": "https://github.com/aksharghatole/StrangeUtility/tree/main/apps/batchrename",
+    "notes": "Preview only; no actual file renaming. Tests written; CI pending."
   }
 ]
