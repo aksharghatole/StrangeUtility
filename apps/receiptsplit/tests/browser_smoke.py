@@ -34,6 +34,11 @@ try:
         page.locator("#payer").select_option("1")
         page.get_by_role("button", name="Assign full payment").click()
         assert page.locator("#transfers").inner_text() == "Asha pays Ben 15.08; Chloe pays Ben 12.84"
+        with page.expect_download() as download:
+            page.get_by_role("button", name="Download text summary").click()
+        summary = download.value.path().read_text(encoding="utf-8")
+        assert "Total: 43.00" in summary
+        assert "Asha pays Ben 15.08" in summary
         page.get_by_role("button", name="Everyone paid their share").click()
         assert page.locator("#transfers").inner_text() == "Already settled."
         page.locator("#discount").fill("3.50")
