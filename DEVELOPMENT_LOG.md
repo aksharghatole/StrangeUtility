@@ -135,3 +135,5 @@ PR #52 merged at 874ed738 after workflows 46117790039 and 46117790093 passed. Cl
 
 ## 2026-11-28 — ValueLens 0.1
 Added a local-first pack-price comparator for mass, volume and item-count products. It converts supported units to standard bases, ranks only like-for-like dimensions, keeps one currency per comparison and exports a formula-safe CSV. Core regression tests are included. CI and browser verification are pending; no local run or deployment is claimed.
+
+- BatchRename 0.1 (PR #55): local filename planning, literal replacement, numbering, collision checks and JSON export. Regression tests written; browser and deployment verification pending. No files modified by app.
