@@ -76,13 +76,23 @@ try:
         assert "invalid item" in page.get_by_role("alert").inner_text().lower()
         assert page.get_by_role("button", name="Export JSON receipt").is_disabled()
 
+        first_row.get_by_role("button", name="Duplicate item").click()
+        copy = page.locator(".receipt-item").last
+        assert copy.get_by_label("Item name").input_value() == "Pizza"
+        assert copy.get_by_label("Amount").input_value() == "21.00"
+        assert copy.locator("input[type=checkbox]:checked").count() == 0
+        copy.get_by_label("Ben").check()
+        assert first_row.locator("input[type=checkbox]:checked").count() == 0
+        assert page.locator("#download").is_disabled()
+        copy.get_by_role("button", name="Remove item 5").click()
+
         # Adding a row must not silently reassign an intentionally empty item.
         page.get_by_role("button", name="Add item").click()
         assert not first_row.get_by_label("Asha").is_checked()
         assert not first_row.get_by_label("Ben").is_checked()
         page.locator("#names").fill("Asha\nBen\nChloe\nDev")
         assert not first_row.get_by_label("Asha").is_checked()
-        page.get_by_role("button", name="Clear").click()
+        page.get_by_role("button", name="Clear", exact=True).click()
         assert page.locator(".receipt-item").count() == 1
         assert page.locator("#names").input_value() == ""
         assert page.locator("#error").inner_text() == ""
