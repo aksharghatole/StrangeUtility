@@ -121,3 +121,5 @@ PR #47 merged at 920216a. Full repository verification and Pages packaging passe
 - ReceiptSplit: added exact-cent payment settlement and JSON transfer export; discount browser assertion fix cd3c469; PR #49. New CI and deployment pending.
 
 - ReceiptSplit #49 merged at 0b9f0f741b16cdc5cf027064fdfc6d29b5b71839 after workflows 46054913969 and 46054913830 passed. Next feature: single-payer and exact-share shortcuts, browser regression coverage; deployment and new CI pending. Heuristic score 8.7/10; no external demand study.
+
+- ReceiptSplit 0.5: plain-text summary download including current transfers; browser download regression added to PR #50. Previous head fc933da passed both workflows; new head pending.
